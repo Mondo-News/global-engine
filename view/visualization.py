@@ -14,10 +14,13 @@ class View:
         jsonurl = urllib.request.urlopen(country_shapes)
         self.country_json_data = json.loads(jsonurl.read())  # <-- read from it
 
+        # Styling for choropleth map when not-hovering
         self.style_function = lambda x: {'fillColor': '#ffffff',
                                          'color': '#000000',
                                          'fillOpacity': 0.1,
                                          'weight': 0.1}
+
+        # Styling for choropleth map when mouse is hovering
         self.highlight_function = lambda x: {'fillColor': '#000000',
                                              'color': '#000000',
                                              'fillOpacity': 0.50,
