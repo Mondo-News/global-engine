@@ -10,7 +10,7 @@ class Controller:
     """
 
     def __init__(self):
-        self.updateArticleData()
+        #self.updateArticleData() # TODO:decomment
         pass
 
     def getTopArticles(self):
@@ -35,6 +35,13 @@ class Controller:
         :return: Filtered pandas data frame
         """
         pass
+
+    def getAvailableIsoCodes(self):
+        """
+        Requests Iso codes from model for which there is news data available
+        :return: List of Iso codes
+        """
+        return modelObject.getThreeLetterIsoCodes()
 
 
 controllerObject = Controller()

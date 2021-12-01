@@ -127,6 +127,16 @@ class Model:
         topArticles = self.df_articles.groupby('country').head(5)
         return topArticles
 
+    def getThreeLetterIsoCodes(self):
+        """
+        Get Available Iso codes for which there is News data available
+        :return: List with 3-Letter Iso codes
+        """
+        output_list = []
+        for iso_code in self.country_codes_top15:
+            output_list.append(convertIsoCodes(iso_code))
+        return output_list
+
 
 # Instantiate a View() object
 modelObject = Model()

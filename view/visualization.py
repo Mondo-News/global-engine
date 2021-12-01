@@ -14,20 +14,37 @@ class View:
         jsonurl = urllib.request.urlopen(country_shapes)
         self.country_json_data = json.loads(jsonurl.read())  # <-- read from it
 
-        # Styling for choropleth map when not-hovering
-        self.style_function = lambda x: {'fillColor': '#ffffff',
-                                         'color': '#000000',
-                                         'fillOpacity': 0.1,
-                                         'weight': 0.1}
+    def styleFuntion(self, feature):
+        """
+        Styling for choropleth map when not-hovering.
+        Returns different styling for countries where there is news data available and where there is not
+        :param feature: GEOJson feature
+        :return: folium style dict
+        """
+        style_no_data = {'fillColor': '#968C83',
+                         'color': '#000000',
+                         'fillOpacity': 0.2,
+                         'weight': 0.1}
+        style_data = {'fillColor': '#BA0020',
+                      'color': '#000000',
+                      'fillOpacity': 0.7,
+                      'weight': 0.1}
 
-        # Styling for choropleth map when mouse is hovering
-        self.highlight_function = lambda x: {'fillColor': '#000000',
-                                             'color': '#000000',
-                                             'fillOpacity': 0.50,
-                                             'weight': 0.1}
+        if feature['id'].lower() in controllerObject.getAvailableIsoCodes():
+            return style_data
+        else:
+            return style_no_data
 
-    def getTopArticles(self):
-        return controllerObject.getTopArticles()
+    def highlightFunction(self, feature):
+        """
+        Styling for choropleth map when mouse is hovering
+        :param feature: GEOJson feature
+        :return: folium style dict
+        """
+        return {'fillColor': '#000000',
+                'color': '#000000',
+                'fillOpacity': 0.50,
+                'weight': 0.1}
 
     def buildPopupHTMLArticleTable(self, three_letter_iso_id):
         """
@@ -44,9 +61,9 @@ class View:
                     </tr>
         """
 
-        df = self.getTopArticles()
+        df = controllerObject.getTopArticles()
         df = df[df['country'].str.lower() == three_letter_iso_id.lower()]
-        if three_letter_iso_id == "deu" or three_letter_iso_id == "usa": # TODO: Delete
+        if three_letter_iso_id == "deu" or three_letter_iso_id == "usa":  # TODO: Delete
             print("Country name: " + three_letter_iso_id)
             print("Filtered DF: " + df.head(5))
         for index, row in df.iterrows():
@@ -70,7 +87,8 @@ class View:
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
-            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'])
+            # html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id']) # TODO: Decomment
+            html_table = ""  # TODO:delete
             html = f"""
             <style>
                 body {{
@@ -132,7 +150,8 @@ class View:
                 self.country_json_data['features'][i],
                 name="geojson",
                 zoom_on_click=True,
-                highlight_function=self.highlight_function
+                style_function=self.styleFuntion,
+                highlight_function=self.highlightFunction
             )
             popup.add_to(geoj)
             geoj.add_to(m1)
