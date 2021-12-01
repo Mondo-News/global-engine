@@ -182,11 +182,11 @@ class View:
         if len(country_iso_code) > 2:
             country_iso_code = utils.convertIsoCodes_3_to_2(country_iso_code).upper()
 
-        print(controllerObject.getAvailableIsoCodes(2))
-        print(country_iso_code.lower())
+        # Return None if there is no news data for the requested country
         if country_iso_code.lower() not in controllerObject.getAvailableIsoCodes(2):
             return None
 
+        # Get Capital location tupel and except Type or Key Errors for countries where there is no geo data available
         try:
             capital_location = self.capitals_json_data['Results'][country_iso_code]['Capital']['GeoPt']
             print(capital_location)
