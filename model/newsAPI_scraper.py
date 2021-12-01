@@ -146,7 +146,7 @@ class Model:
 
             news_df['content'] = news_df['content'].apply(lambda content:
                                                           self.translator.translate(content, dest='en').text)
-        except TypeError as e:
+        except AttributeError as e:
             print("Error occurred: " + str(e))
             print("A empty text cannot be translated. Skipping this one.")
             pass

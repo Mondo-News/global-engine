@@ -2,10 +2,11 @@ import json
 import urllib
 import webbrowser
 import folium
+from folium import plugins
 from controller.controller import controllerObject
 from utils import utils
-from folium.plugins import search, terminator
 import ssl
+
 
 class View:
 
@@ -93,8 +94,8 @@ class View:
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
-            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id']) # TODO: Comment for testing
-            #html_table = ""  # TODO: Decomment for testing
+            #html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id']) # TODO: Comment for testing
+            html_table = ""  # TODO: Decomment for testing
             html = f"""
             <style>
                 body {{
@@ -169,6 +170,9 @@ class View:
                     fill=True,
                     fill_color="#3186cc"
                 ).add_to(m1)
+
+            # Add day/nighttime overlay to map
+            #m1.add_child(plugins.Terminator())
 
         return m1
 

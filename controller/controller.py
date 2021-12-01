@@ -10,7 +10,7 @@ class Controller:
     """
 
     def __init__(self):
-        self.updateArticleData() # TODO: Comment for testing
+        #self.updateArticleData() # TODO: Comment for testing
         pass
 
     def getTopArticles(self):
