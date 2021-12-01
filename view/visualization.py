@@ -2,7 +2,7 @@ import json
 import urllib
 import webbrowser
 import folium
-import controller
+from controller.controller import controllerObject
 
 
 class View:
@@ -26,6 +26,40 @@ class View:
                                              'fillOpacity': 0.50,
                                              'weight': 0.1}
 
+    def getTopArticles(self):
+        return controllerObject.getTopArticles()
+
+    def buildPopupHTMLArticleTable(self, three_letter_iso_id):
+        """
+        For a given country 3-Letter ISO this method build the HTML string for the folium Popup need in load_map()
+        :return: HTML String
+        """
+
+        html_table = f"""
+                <table>
+                    <tr>
+                        <th>Thumbnail</th>
+                        <th>Title</th>
+                        <th>Outlet</th>
+                    </tr>
+        """
+
+        df = self.getTopArticles()
+        df = df[df['country'].str.lower() == three_letter_iso_id.lower()]
+        if three_letter_iso_id == "deu" or three_letter_iso_id == "usa": # TODO: Delete
+            print("Country name: " + three_letter_iso_id)
+            print("Filtered DF: " + df.head(5))
+        for index, row in df.iterrows():
+            html_table_row = f"""<tr>
+                <td><img class="thumbnail" src={row['urlToImage']}></td>
+                <td><a href={row['url']} target="_blank">{row['title']}</a></td>
+                <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png"></td>
+            </tr>
+            """
+            html_table = html_table + html_table_row
+
+        return html_table + "</table>"
+
     def load_map(self):
         """
         Creates and renders folium/leaflet map.
@@ -36,91 +70,62 @@ class View:
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
+            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'])
             html = f"""
             <style>
                 body {{
                     font-family: Corbel;
                 }}
-
+            
                 h1 {{
                     font-size: 20px;
                 }}
-
+            
                 h2 {{
                     font-size: 14px;
                 }}
-
+            
                 table {{
                     font-size: 14px;
                     width: 600px;
                     border-spacing: 10px;
                 }}
-
+            
                 th {{
                     border-bottom: 1px solid black;
                     padding: 5px;
                 }}
-
+            
                 .thumbnail {{
                     width: 100;
                 }}
-
+            
                 .outlet-logo {{
                     width: 50;
                 }}
-
+            
                 a {{
                 color: black;
                 text-decoration: none;
                 }}
-
+            
                 a:hover {{
                     text-decoration: underline;
                 }}
-
+            
                 p {{
                     color: red;
                 }}
-
+            
             </style>
-
+            
             <body>
-                <h1> {self.country_json_data['features'][i]['properties']['name']}</h1>
+                <h1>{self.country_json_data['features'][i]['properties']['name']}</h1>
                 <h2>What people talk about:</h2>
-                <table>
-                    <tr>
-                        <th>Thumbnail</th>
-                        <th>Title</th>
-                        <th>Outlet</th>
-                    </tr>
-                    <tr>
-                        <td><img class="thumbnail" src="https://s.abcnews.com/images/International/uk-gty-er-211127_1638029361181_hpMain_16x9_608.jpg"></td>
-                        <td>COVID-19 live updates: Omicron cases spread to UK, Germany</td>
-                        <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/American_Broadcasting_Company_Logo.svg/2044px-American_Broadcasting_Company_Logo.svg.png"></td>
-                    </tr>
-                    <tr>
-                        <td><img class="thumbnail" src="https://a57.foxnews.com/hp.foxnews.com/images/2021/11/1280/533/6d04833942cf467c56742c487d7e0540.jpg?tl=1&ve=1"></td>
-                        <td>Waukesha victim's uncle, a vet who served in Iraq, reveals what he wants to happen to the suspect</td>
-                        <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/de/thumb/6/67/Fox_News_Channel_logo.svg/1920px-Fox_News_Channel_logo.svg.png"></td>
-                    </tr>
-                    <tr>
-                        <td><img class="thumbnail" src="https://cdn.cnn.com/cnnnext/dam/assets/211127130931-covid-omicron-vaccine-inequity-112721-large-tease.jpg"></td>
-                        <td>Scientists: Vaccine inequity and hesitancy to blame for variant</td>
-                        <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png"></td>
-                    </tr>
-                    <tr>
-                        <td><img class="thumbnail" src="https://s.abcnews.com/images/International/WireAP_b90b43f0101a4a2c86236ca17761eb9c_16x9_992.jpg"></td>
-                        <td>Nissan investing in electric vehicles, battery development</td>
-                        <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/American_Broadcasting_Company_Logo.svg/2044px-American_Broadcasting_Company_Logo.svg.png"></td>
-                    </tr>
-                    <tr>
-                        <td><img class="thumbnail" src="https://cdn.cnn.com/cnnnext/dam/assets/211128135909-01-virgil-abloh-file-070521-medium-tease.jpg"></td>
-                        <td><a href="https://edition.cnn.com/style/article/virgil-abloh-death/index.html" target="_blank">Louis Vuitton artistic director Virgil Abloh dies at 41</a></td>
-                        <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png"></td>
-                    </tr>
-                </table>
-            </body>
-                """
+            """ + \
+                   html_table + \
+                   f"</body>"
+
             iframe = folium.IFrame(html=html, width=640, height=450)
             popup = folium.Popup(iframe, max_width=2650)
             geoj = folium.GeoJson(

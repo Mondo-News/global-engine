@@ -1,6 +1,23 @@
+import pycountry
 from newsapi import NewsApiClient
 import pandas as pd
 import controller
+
+
+def convertIsoCodes(two_letter_iso):
+    """
+    converts 2-Letter ISO codes to 3-Letter ISO codes.
+    :param two_letter_iso:
+    :return: 3-Letter ISO Code
+    """
+    countries = {}
+    for country in pycountry.countries:
+        countries[country.alpha_2.lower()] = country.alpha_3.lower()
+
+    three_letter_iso = countries.get(two_letter_iso, 'Unknown code')
+
+    return three_letter_iso
+
 
 class Model:
 
@@ -10,11 +27,10 @@ class Model:
         api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
-        self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
-                                    'cn']
-        self.df_articles = pd.DataFrame(
-            columns=['country', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
-                     'publishedAt'])
+        self.country_codes_top15 = ['de', 'us'] # For testing
+        #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
+        #                            'cn'] # TODO: Replace test variable with commented real list
+        self.df_articles = pd.DataFrame()
 
         # self.country_codes = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
         # 'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx', 'my',
@@ -22,7 +38,7 @@ class Model:
         # 'ua', 'us', 've', 'za'] self.country_codes_g20 = ['ar','au','br','de','fr','in','id','it','jp','ca','mx',
         # 'ru','sa','za', 'kr','tr','gb','us','cn']
 
-    def scrape_data(self):
+    def scrape_newsAPI(self):
         """
         This functions scrapes data from the NewsAPI and stores it into the top_headlines dictionary
         :return: Dict with raw API response from NewsAPI
@@ -53,20 +69,25 @@ class Model:
 
         return top_headlines
 
-    def transform_data(self, raw_headlines_dict):
+    def transform_article_data(self, raw_api_response_dict):
         """
         Transforms the response dictionary from scrape_data() into a pandas dataframe by mapping the relevant
         data to predefined columns.
         :return: Transformed article data pandas df
         """
 
-        for country in raw_headlines_dict:
+        # Delete old data and override it with an empty data frame
+        df = pd.DataFrame(
+            columns=['country', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
+                     'publishedAt'])
+
+        for country in raw_api_response_dict:
             print(country)
             country_dict = {'country': [], 'source': [], 'title': [], 'author': [], 'description': [], 'content': [],
                             'url': [], 'urlToImage': [], 'publishedAt': []}
 
-            for article in raw_headlines_dict[country]['articles']:
-                country_dict['country'].append(country)
+            for article in raw_api_response_dict[country]['articles']:
+                country_dict['country'].append(convertIsoCodes(country))
                 country_dict['source'].append(article['source']['name'])
                 country_dict['title'].append(article['title'])
                 country_dict['author'].append(article['author'])
@@ -77,24 +98,34 @@ class Model:
                 country_dict['publishedAt'].append(article['publishedAt'])
 
             df_country_dict = pd.DataFrame.from_dict(country_dict)
-            self.df_articles = self.df_articles.append(df_country_dict, ignore_index=True)
+            df = df.append(df_country_dict, ignore_index=True)
 
-        return self.df_articles
+        return df
 
-    def updateData(self):
+    def storeArticleData(self,  transformed_article_data):
         """
-        Triggers scraper and updates database.
+        Overwrties df_article with given transformed data frame
+        :param transformed_article_data: Pandas data frame with transformed article data
         :return: None
         """
-        raw_headlines_dict = self.scrape_data()
-        transformed_output = self.transform_data(raw_headlines_dict)
+        self.df_articles = transformed_article_data
+        print("New Article Data: ") # TODO: Delete
+        print(self.df_articles.head()) # TODO: Delete
 
-    def getArticleData(self):
+    def getFullArticleData(self):
         """
-        Returns latest article data as pandas dataframe.
+        Returns latest full article data as pandas dataframe.
         :return: Latest article data as pandas dataframe
         """
         return self.df_articles
+
+    def getTopArticles(self):
+        """
+        Filters for topmost five articles per country of the full df_article data frame
+        :return: Filtered pandas data frame
+        """
+        topArticles = self.df_articles.groupby('country').head(5)
+        return topArticles
 
 
 # Instantiate a View() object
