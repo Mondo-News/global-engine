@@ -4,6 +4,7 @@ import webbrowser
 import folium
 from controller.controller import controllerObject
 from utils import utils
+from folium.plugins import search, terminator
 
 
 class View:
@@ -63,7 +64,6 @@ class View:
                     <tr>
                         <th>Thumbnail</th>
                         <th>Title</th>
-                        <th>Outlet</th>
                     </tr>
         """
         assert len(three_letter_iso_id) == 3
@@ -77,7 +77,6 @@ class View:
             html_table_row = f"""<tr>
                 <td><img class="thumbnail" src={row['urlToImage']}></td>
                 <td><a href={row['url']} target="_blank">{row['title']}</a></td>
-                <td><img class="outlet-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png"></td>
             </tr>
             """
             html_table = html_table + html_table_row
@@ -123,10 +122,6 @@ class View:
             
                 .thumbnail {{
                     width: 100;
-                }}
-            
-                .outlet-logo {{
-                    width: 50;
                 }}
             
                 a {{
