@@ -128,5 +128,7 @@ class Model:
 # Instantiate a View() object
 modelObject = Model()
 
+
+
 # OLD CODE: Code for storing pandas df as csv in current directory
 # modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig")
