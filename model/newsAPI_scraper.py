@@ -1,3 +1,4 @@
+import deepl
 from newsapi import NewsApiClient
 import pandas as pd
 from utils import utils
@@ -9,12 +10,15 @@ class Model:
         # We have two api keys for testing
         api_key_1 = '07288a2d35394938b113ad3cf504d9cd'
         api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
+        api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
         self.country_codes_top15 = ['de', 'us'] # For testing
         #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn'] # TODO: Replace test variable with commented real list
         self.df_articles = pd.DataFrame()
+
+        self.translator = deepl.Translator(api_key_deepl_1)
 
         # self.country_codes = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
         # 'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx', 'my',
@@ -123,6 +127,43 @@ class Model:
 
     def getTwoLetterIsoCodes(self):
         return self.country_codes_top15
+
+    def translateArticleData(self, news_df):
+        """
+        Gets scraped and transformed dataframe with information on all news articles and translates relevant information.
+        That is, it translates only the title, description and content.
+        It returns again a pandas dataframe.
+
+        :param news_df:
+        :return: Translated article data pandas dataframe
+        """
+
+        translated_df = pd.DataFrame(
+            columns=['country', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
+                     'publishedAt'])
+
+        translated_df['country'] = news_df['country']
+        translated_df['source'] = news_df['source']
+        translated_df['title'] = news_df['title'].apply(lambda title:
+                                                        self.translator.translate_text(title, target_lang="EN-GB"))
+
+        translated_df['author'] = news_df['author']
+
+        translated_df['description'] = news_df['description'].apply(lambda description:
+                                                                    self.translator.translate_text(description,
+                                                                                                   target_lang="EN-GB"))
+        # translated_df['description'] = self.translator.translate_text(news_df['description'], target_lang="ENG-GB")
+
+        translated_df['content'] = news_df['content'].apply(lambda content:
+                                                            self.translator.translate_text(content,
+                                                                                           target_lang="EN-GB"))
+        # translated_df['content'] = self.translator.translate_text(news_df['content'],target_lang="ENG-GB")
+
+        translated_df['url'] = news_df['url']
+        translated_df['urlToImage'] = news_df['urlToImage']
+        translated_df['publishedAt'] = news_df['publishedAt']
+
+        return translated_df
 
 
 # Instantiate a View() object
