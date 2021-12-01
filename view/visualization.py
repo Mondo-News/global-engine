@@ -5,7 +5,7 @@ import folium
 from controller.controller import controllerObject
 from utils import utils
 from folium.plugins import search, terminator
-
+import ssl
 
 class View:
 

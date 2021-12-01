@@ -1,4 +1,4 @@
-import deepl
+from google_trans_new import google_translator
 from newsapi import NewsApiClient
 import pandas as pd
 from utils import utils
@@ -11,16 +11,13 @@ class Model:
         api_key_1 = '07288a2d35394938b113ad3cf504d9cd'
         api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
 
-        # API Key for deepl
-        api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
-
         self.newsAPI = NewsApiClient(api_key=api_key_2)
         self.country_codes_top15 = ['de', 'us'] # For testing
         #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn'] # TODO: Replace test variable with commented real list
         self.df_articles = pd.DataFrame()
 
-        self.translator = deepl.Translator(api_key_deepl_1)
+        self.translator = google_translator()
 
         # self.country_codes = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
         # 'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx', 'my',
@@ -141,17 +138,14 @@ class Model:
         """
         try:
 
-            news_df['title'] = news_df['title'].apply(lambda title:
-                                                            self.translator.translate_text(title, target_lang="EN-GB"))
+            news_df['title'] = news_df['title'].apply(lambda title: self.translator.translate(title, lang_tgt='en').text)
 
-            # TODO: If translation of description and content is needed, decomment part below
-            # news_df['description'] = news_df['description'].apply(lambda description:
-            #                                                             self.translator.translate_text(description,
-            #                                                                                            target_lang="EN-GB"))
-            #
-            # news_df['content'] = news_df['content'].apply(lambda content:
-            #                                                     self.translator.translate_text(content,
-            #                                                                                    target_lang="EN-GB"))
+            # TODO: If translation of description and content is not needed, comment part below
+            news_df['description'] = news_df['description'].apply(lambda description:
+                                                                  self.translator.translate(description, lang_tgt='en').text)
+
+            news_df['content'] = news_df['content'].apply(lambda content:
+                                                          self.translator.translate(content, lang_tgt='en').text)
         except ValueError as e:
             print("Error occurred: " + str(e))
             print("A empty text cannot be translated. Skipping this one.")
