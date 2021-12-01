@@ -94,8 +94,8 @@ class View:
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
-            # html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id']) # TODO: Decomment
-            html_table = ""  # TODO:delete
+            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id']) # TODO: Comment for testing
+            #html_table = ""  # TODO: Decomment for testing
             html = f"""
             <style>
                 body {{

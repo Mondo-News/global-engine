@@ -10,7 +10,7 @@ class Controller:
     """
 
     def __init__(self):
-        #self.updateArticleData() # TODO:decomment
+        self.updateArticleData() # TODO: Comment for testing
         pass
 
     def getTopArticles(self):
@@ -26,7 +26,8 @@ class Controller:
         """
         raw_api_response_dict = modelObject.scrape_newsAPI()
         transformed_data = modelObject.transform_article_data(raw_api_response_dict)
-        modelObject.storeArticleData(transformed_data)
+        translated_data = modelObject.translateArticleData(transformed_data)
+        modelObject.storeArticleData(translated_data)
 
 
     def searchArticleData(self, keyword):
