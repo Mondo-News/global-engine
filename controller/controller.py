@@ -36,12 +36,18 @@ class Controller:
         """
         pass
 
-    def getAvailableIsoCodes(self):
+    def getAvailableIsoCodes(self, iso_type):
         """
         Requests Iso codes from model for which there is news data available
+        :type iso_type: ISO type of return object: Either two or three
         :return: List of Iso codes
         """
-        return modelObject.getThreeLetterIsoCodes()
+        assert iso_type == 2 or iso_type == 3
+
+        if iso_type == 2:
+            return modelObject.getTwoLetterIsoCodes()
+        else:
+            return modelObject.getThreeLetterIsoCodes()
 
 
 controllerObject = Controller()

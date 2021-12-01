@@ -1,22 +1,6 @@
-import pycountry
 from newsapi import NewsApiClient
 import pandas as pd
-import controller
-
-
-def convertIsoCodes(two_letter_iso):
-    """
-    converts 2-Letter ISO codes to 3-Letter ISO codes.
-    :param two_letter_iso:
-    :return: 3-Letter ISO Code
-    """
-    countries = {}
-    for country in pycountry.countries:
-        countries[country.alpha_2.lower()] = country.alpha_3.lower()
-
-    three_letter_iso = countries.get(two_letter_iso, 'Unknown code')
-
-    return three_letter_iso
+from utils import utils
 
 
 class Model:
@@ -87,7 +71,7 @@ class Model:
                             'url': [], 'urlToImage': [], 'publishedAt': []}
 
             for article in raw_api_response_dict[country]['articles']:
-                country_dict['country'].append(convertIsoCodes(country))
+                country_dict['country'].append(utils.convertIsoCodes_2_to_3(country))
                 country_dict['source'].append(article['source']['name'])
                 country_dict['title'].append(article['title'])
                 country_dict['author'].append(article['author'])
@@ -134,8 +118,11 @@ class Model:
         """
         output_list = []
         for iso_code in self.country_codes_top15:
-            output_list.append(convertIsoCodes(iso_code))
+            output_list.append(utils.convertIsoCodes_2_to_3(iso_code))
         return output_list
+
+    def getTwoLetterIsoCodes(self):
+        return self.country_codes_top15
 
 
 # Instantiate a View() object

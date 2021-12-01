@@ -3,16 +3,22 @@ import urllib
 import webbrowser
 import folium
 from controller.controller import controllerObject
+from utils import utils
 
 
 class View:
 
     def __init__(self):
-        # Setting up the world countries data URL
-        url = 'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data'
-        country_shapes = f'{url}/world-countries.json'
-        jsonurl = urllib.request.urlopen(country_shapes)
-        self.country_json_data = json.loads(jsonurl.read())  # <-- read from it
+        # Setting up the world COUNTRIES data URL
+        countries_url = 'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data'
+        countries_jsonurl = f'{countries_url}/world-countries.json'
+        country_shapes = urllib.request.urlopen(countries_jsonurl)
+        self.country_json_data = json.loads(country_shapes.read())  # <-- read from it
+
+        # Setting up the world CAPITALS data URL
+        capitals_url = 'http://www.geognos.com/api/en/countries/info'
+        capitals_jsonurl = urllib.request.urlopen(f'{capitals_url}/all.json')
+        self.capitals_json_data = json.loads(capitals_jsonurl.read())
 
     def styleFuntion(self, feature):
         """
@@ -30,7 +36,7 @@ class View:
                       'fillOpacity': 0.7,
                       'weight': 0.1}
 
-        if feature['id'].lower() in controllerObject.getAvailableIsoCodes():
+        if feature['id'].lower() in controllerObject.getAvailableIsoCodes(3):
             return style_data
         else:
             return style_no_data
@@ -60,13 +66,14 @@ class View:
                         <th>Outlet</th>
                     </tr>
         """
+        assert len(three_letter_iso_id) == 3
 
-        df = controllerObject.getTopArticles()
-        df = df[df['country'].str.lower() == three_letter_iso_id.lower()]
+        df_top_articles = controllerObject.getTopArticles()
+        df_top_articles = df_top_articles[df_top_articles['country'].str.lower() == three_letter_iso_id.lower()]
         if three_letter_iso_id == "deu" or three_letter_iso_id == "usa":  # TODO: Delete
             print("Country name: " + three_letter_iso_id)
-            print("Filtered DF: " + df.head(5))
-        for index, row in df.iterrows():
+            print("Filtered DF: " + df_top_articles.head(5))
+        for index, row in df_top_articles.iterrows():
             html_table_row = f"""<tr>
                 <td><img class="thumbnail" src={row['urlToImage']}></td>
                 <td><a href={row['url']} target="_blank">{row['title']}</a></td>
@@ -146,6 +153,7 @@ class View:
 
             iframe = folium.IFrame(html=html, width=640, height=450)
             popup = folium.Popup(iframe, max_width=2650)
+
             geoj = folium.GeoJson(
                 self.country_json_data['features'][i],
                 name="geojson",
@@ -155,7 +163,40 @@ class View:
             )
             popup.add_to(geoj)
             geoj.add_to(m1)
+
+            # Create Marker on Capital for countries where we have geo data of capital
+            capital_location = self.getCapitalLocation(self.country_json_data['features'][i]['id'])
+            if capital_location is not None:
+                folium.CircleMarker(
+                    location=self.getCapitalLocation(self.country_json_data['features'][i]['id']),
+                    radius=10,
+                    color="#3186cc",
+                    fill=True,
+                    fill_color="#3186cc"
+                ).add_to(m1)
+
         return m1
+
+    def getCapitalLocation(self, country_iso_code):
+        # Check whether ISO code of source database is 2 or 3-Letters and convert if 3-Letter
+        if len(country_iso_code) > 2:
+            country_iso_code = utils.convertIsoCodes_3_to_2(country_iso_code).upper()
+
+        print(controllerObject.getAvailableIsoCodes(2))
+        print(country_iso_code.lower())
+        if country_iso_code.lower() not in controllerObject.getAvailableIsoCodes(2):
+            return None
+
+        try:
+            capital_location = self.capitals_json_data['Results'][country_iso_code]['Capital']['GeoPt']
+            print(capital_location)
+            return capital_location
+        except TypeError:
+            return None
+        except KeyError:
+            print("KeyError: " + country_iso_code)
+            return None
+
 
 
 def auto_open(path, map_object):
