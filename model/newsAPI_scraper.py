@@ -1,4 +1,4 @@
-from google_trans_new import google_translator
+from googletrans import Translator
 from newsapi import NewsApiClient
 import pandas as pd
 from utils import utils
@@ -17,7 +17,7 @@ class Model:
         #                            'cn'] # TODO: Replace test variable with commented real list
         self.df_articles = pd.DataFrame()
 
-        self.translator = google_translator()
+        self.translator = Translator()
 
         # self.country_codes = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
         # 'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx', 'my',
@@ -138,15 +138,15 @@ class Model:
         """
         try:
 
-            news_df['title'] = news_df['title'].apply(lambda title: self.translator.translate(title, lang_tgt='en').text)
+            news_df['title'] = news_df['title'].apply(lambda title: self.translator.translate(title, dest='en').text)
 
             # TODO: If translation of description and content is not needed, comment part below
             news_df['description'] = news_df['description'].apply(lambda description:
-                                                                  self.translator.translate(description, lang_tgt='en').text)
+                                                                  self.translator.translate(description, dest='en').text)
 
             news_df['content'] = news_df['content'].apply(lambda content:
-                                                          self.translator.translate(content, lang_tgt='en').text)
-        except ValueError as e:
+                                                          self.translator.translate(content, dest='en').text)
+        except TypeError as e:
             print("Error occurred: " + str(e))
             print("A empty text cannot be translated. Skipping this one.")
             pass
