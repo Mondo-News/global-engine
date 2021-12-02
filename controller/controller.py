@@ -38,8 +38,6 @@ class Controller:
             translated_data = modelObject.translateArticleData(transformed_data)
             df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
-        print("New Article Data is being stored: ")
-        print(df_newArticleData.head())
         modelObject.storeArticleData(df_newArticleData)
 
 

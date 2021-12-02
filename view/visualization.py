@@ -165,7 +165,7 @@ class View:
             if capital_location is not None:
                 folium.CircleMarker(
                     location=self.getCapitalLocation(self.country_json_data['features'][i]['id']),
-                    radius=10,
+                    radius=5,
                     color="#3186cc",
                     fill=True,
                     fill_color="#3186cc"

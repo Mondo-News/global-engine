@@ -15,7 +15,7 @@ class Model:
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
-        self.country_codes_top15 = ['de', 'us'] # For testing
+        self.country_codes_top15 = ['fr'] # For testing TODO: Delete
         #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn'] # TODO: Replace test variable with commented real list
         self.df_articles = pd.DataFrame()
@@ -102,8 +102,9 @@ class Model:
         :return: None
         """
         self.df_articles = transformed_article_data
-        print("New Article Data: ") # TODO: Delete
-        print(self.df_articles.head()) # TODO: Delete
+        print("New Article Data is being stored: ")
+        print(self.df_articles[['url', 'category']].head())
+        #self.df_articles.to_csv("df_articles.csv", index=False, encoding="utf-8-sig") # TODO: Delete
 
     def getFullArticleData(self):
         """
