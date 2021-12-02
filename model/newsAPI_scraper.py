@@ -25,38 +25,41 @@ class Model:
         # 'ua', 'us', 've', 'za'] self.country_codes_g20 = ['ar','au','br','de','fr','in','id','it','jp','ca','mx',
         # 'ru','sa','za', 'kr','tr','gb','us','cn']
 
-    def scrape_newsAPI(self):
+    def scrape_newsAPI(self, category):
         """
         This functions scrapes data from the NewsAPI and stores it into the top_headlines dictionary
         :return: Dict with raw API response from NewsAPI
         """
+        # Categories supported by NewsAPI
+        categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
+
         top_headlines = {}
 
         for country_code in self.country_codes_top15:
-            print("country for next request: " + country_code)
+            print("Country for next NewsAPI request: " + country_code)
             if country_code in ['au', 'gb', 'us', 'za', 'in', 'ca']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='en')
             elif country_code in ['br']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='pt')
             elif country_code in ['mx', 'ar']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='es')
             elif country_code in ['sa']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='ar')
             elif country_code in ['cn']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='zh')
             else:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code,
                                                                              language=country_code)
 
         return top_headlines
 
-    def transform_article_data(self, raw_api_response_dict):
+    def transform_article_data(self, raw_api_response_dict, category):
         """
         Transforms the response dictionary from scrape_data() into a pandas dataframe by mapping the relevant
         data to predefined columns.
@@ -69,12 +72,12 @@ class Model:
                      'publishedAt'])
 
         for country in raw_api_response_dict:
-            print(country)
-            country_dict = {'country': [], 'source': [], 'title': [], 'author': [], 'description': [], 'content': [],
+            country_dict = {'country': [], 'category': [], 'source': [], 'title': [], 'author': [], 'description': [], 'content': [],
                             'url': [], 'urlToImage': [], 'publishedAt': []}
 
             for article in raw_api_response_dict[country]['articles']:
                 country_dict['country'].append(utils.convertIsoCodes_2_to_3(country))
+                country_dict['category'].append(category)
                 country_dict['source'].append(article['source']['name'])
                 country_dict['title'].append(article['title'])
                 country_dict['author'].append(article['author'])

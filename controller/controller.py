@@ -24,10 +24,23 @@ class Controller:
         Triggers scraper and updates database.
         :return:
         """
-        raw_api_response_dict = modelObject.scrape_newsAPI()
-        transformed_data = modelObject.transform_article_data(raw_api_response_dict)
-        translated_data = modelObject.translateArticleData(transformed_data)
-        modelObject.storeArticleData(translated_data)
+        # Categories supported by NewsAPI
+        # categories = ['general', 'technology', 'business', 'science', 'sports', 'health'] # TODO: Commented for testing
+        categories = ['general', 'technology'] # TODO: Delete
+
+        # Drops all data in Article Data and assigns it to new object
+        df_newArticleData = modelObject.getFullArticleData()[0:0]
+
+        for category in categories:
+            print("Next category to be parsed: " + category)
+            raw_api_response_dict = modelObject.scrape_newsAPI(category)
+            transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
+            translated_data = modelObject.translateArticleData(transformed_data)
+            df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
+
+        print("New Article Data is being stored: ")
+        print(df_newArticleData.head())
+        modelObject.storeArticleData(df_newArticleData)
 
 
     def searchArticleData(self, keyword):
