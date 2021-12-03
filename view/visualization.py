@@ -243,7 +243,7 @@ def auto_open(path, map_object):
 # Instantiate a View() object
 viewObject = View()
 # Create map and open it
-auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories()))
+#auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories()))
 
 # OLD CODE BELOW
 # # add marker one by one on the map

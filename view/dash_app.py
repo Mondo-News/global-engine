@@ -3,7 +3,6 @@ from controller.controller import controllerObject
 from view.visualization import viewObject
 from dash import html, dcc
 from dash.dependencies import Input, Output
-import time
 
 app = dash.Dash(__name__)
 
@@ -24,7 +23,7 @@ red_button_style = {'background-color': '#BA0020',
                     'margin-left': '50px',
                     'margin-bottom': '20px',
                     'font-family': 'Corbel',
-                    'font-size': '16pt',
+                    'font-size': '14pt',
                     'border-radius': '5px'}
 
 app.layout = html.Div(children=[
@@ -48,13 +47,13 @@ app.layout = html.Div(children=[
                   style={'width': '300px',
                          'height': '30px',
                          'font-family': 'Corbel',
-                         'color': 'grey',
+                         'color': 'black',
                          'margin-bottom': '20px',
                          'margin-top': '5px',
                          'margin-left': '20px',
                          'border-radius': '3px'}),
         html.Button(id='general',
-                    children=['general'],
+                    children=['General'],
                     n_clicks=0,
                     style=white_button_style
                     ),
@@ -100,8 +99,8 @@ app.layout = html.Div(children=[
                'height': '80vh',
                'width': '100%',
                'margin': '0',
-               'padding': '0',
-               'color': '#BA0020'}
+               'padding': '0'},
+        color='#BA0020'
     ),
     html.Div(id='hidden-div1', style={'display': 'none'}),
     html.Div(id='hidden-div2', style={'display': 'none'}),
