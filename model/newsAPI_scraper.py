@@ -15,8 +15,8 @@ class Model:
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
-        self.country_codes_top15 = ['fr'] # For testing TODO: Delete
-        #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
+        self.country_codes_top15 = ['fr']  # For testing TODO: Delete
+        # self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn'] # TODO: Replace test variable with commented real list
         self.df_articles = pd.DataFrame()
 
@@ -33,8 +33,6 @@ class Model:
         This functions scrapes data from the NewsAPI and stores it into the top_headlines dictionary
         :return: Dict with raw API response from NewsAPI
         """
-        # Categories supported by NewsAPI
-        categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
 
         top_headlines = {}
 
@@ -75,7 +73,8 @@ class Model:
                      'publishedAt'])
 
         for country in raw_api_response_dict:
-            country_dict = {'country': [], 'category': [], 'source': [], 'title': [], 'author': [], 'description': [], 'content': [],
+            country_dict = {'country': [], 'category': [], 'source': [], 'title': [], 'author': [], 'description': [],
+                            'content': [],
                             'url': [], 'urlToImage': [], 'publishedAt': []}
 
             for article in raw_api_response_dict[country]['articles']:
@@ -95,7 +94,7 @@ class Model:
 
         return df
 
-    def storeArticleData(self,  transformed_article_data):
+    def storeArticleData(self, transformed_article_data):
         """
         Overwrties df_article with given transformed data frame
         :param transformed_article_data: Pandas data frame with transformed article data
@@ -103,8 +102,8 @@ class Model:
         """
         self.df_articles = transformed_article_data
         print("New Article Data is being stored: ")
-        print(self.df_articles[['url', 'category']].head())
-        #self.df_articles.to_csv("df_articles.csv", index=False, encoding="utf-8-sig") # TODO: Delete
+        print(self.getFullArticleData()[['url', 'category']].head())
+        # self.df_articles.to_csv("df_articles.csv", index=False, encoding="utf-8-sig") # TODO: Delete
 
     def getFullArticleData(self):
         """
@@ -118,8 +117,28 @@ class Model:
         Filters for topmost five articles per country of the full df_article data frame
         :return: Filtered pandas data frame
         """
-        topArticles = self.df_articles.groupby('country').head(5)
+        topArticles = self.getFullArticleData().groupby('country').head(5)
         return topArticles
+
+    def getArticlesByCategories(self, filter_categories):
+        """
+        Filters full article data by selected categories from the buttons in the UI.
+        :param filter_categories: List of categories to be filtered for
+        :return: Filtered pandas dataframe
+        """
+        # Categories supported by NewsAPI
+        newsAPI_categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
+
+        assert type(filter_categories) is list
+        assert [cat in newsAPI_categories for cat in filter_categories] or not filter_categories
+
+        # Filter full article data for input categories
+        boolean_series = self.getFullArticleData()['category'].isin(filter_categories)
+        filtered_articles = self.getFullArticleData()[boolean_series]
+        # Select top five articles per country per category
+        top5_filtered_articles = filtered_articles.groupby(['country', 'category']).head(5)
+
+        return top5_filtered_articles
 
     def getThreeLetterIsoCodes(self):
         """
@@ -166,8 +185,6 @@ class Model:
 
 # Instantiate a View() object
 modelObject = Model()
-
-
 
 # OLD CODE: Code for storing pandas df as csv in current directory
 # modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig")

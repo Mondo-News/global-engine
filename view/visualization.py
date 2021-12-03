@@ -54,7 +54,7 @@ class View:
                 'fillOpacity': 0.50,
                 'weight': 0.1}
 
-    def buildPopupHTMLArticleTable(self, three_letter_iso_id):
+    def buildPopupHTMLArticleTable(self, three_letter_iso_id, selected_categories):
         """
         For a given country 3-Letter ISO this method build the HTML string for the folium Popup need in load_map()
         :return: HTML String
@@ -65,37 +65,40 @@ class View:
                     <tr>
                         <th>Thumbnail</th>
                         <th>Title</th>
+                        <th>Category</th>
                     </tr>
         """
         assert len(three_letter_iso_id) == 3
 
-        df_top_articles = controllerObject.getTopArticles()
-        df_top_articles = df_top_articles[df_top_articles['country'].str.lower() == three_letter_iso_id.lower()]
+        df_filtered_articles = controllerObject.getArticlesByCategories(selected_categories)
+        df_filtered_articles = df_filtered_articles[df_filtered_articles['country'].str.lower() == three_letter_iso_id.lower()]
         if three_letter_iso_id == "deu" or three_letter_iso_id == "usa":  # TODO: Delete
             print("Country name: " + three_letter_iso_id)
-            print("Filtered DF: " + df_top_articles.head(5))
-        for index, row in df_top_articles.iterrows():
+            print("Filtered DF: " + df_filtered_articles.head(5))
+        for index, row in df_filtered_articles.iterrows():
             html_table_row = f"""<tr>
                 <td><img class="thumbnail" src={row['urlToImage']}></td>
                 <td><a href={row['url']} target="_blank">{row['title']}</a></td>
+                <td>{row['category']}</td>
             </tr>
             """
             html_table = html_table + html_table_row
 
         return html_table + "</table>"
 
-    def load_map(self):
+    def load_map(self, selected_categories):
         """
         Creates and renders folium/leaflet map.
         :return: folium map object
         """
         # Create a map
+        print('map is created')
         m1 = folium.Map(location=[52.51284693487173, 13.389233110107703], tiles='cartodbpositron', zoom_start=3)
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
-            #html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id']) # TODO: Comment for testing
-            html_table = ""  # TODO: Decomment for testing
+            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'], selected_categories) # TODO: Comment for testing
+            #html_table = ""  # TODO: Decomment for testing
             html = f"""
             <style>
                 body {{
@@ -188,13 +191,24 @@ class View:
         # Get Capital location tupel and except Type or Key Errors for countries where there is no geo data available
         try:
             capital_location = self.capitals_json_data['Results'][country_iso_code]['Capital']['GeoPt']
-            print(capital_location)
             return capital_location
         except TypeError:
             return None
         except KeyError:
             print("KeyError: " + country_iso_code)
             return None
+
+    def saveMapHTML(self, map_object):
+        path = "map.html"
+        html_page = f"{path}"
+        map_object.save(html_page)
+
+    def refreshMap(self):
+        print('New map is loading...')
+        loaded_map_object = self.load_map(controllerObject.getSelectedCategories())
+        print("Refreshed map.html has been created")
+        self.saveMapHTML(loaded_map_object)
+
 
 
 
@@ -215,7 +229,7 @@ def auto_open(path, map_object):
 # Instantiate a View() object
 viewObject = View()
 # Create map and open it
-auto_open("map.html", viewObject.load_map())
+#auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories()))
 
 # OLD CODE BELOW
 # # add marker one by one on the map
