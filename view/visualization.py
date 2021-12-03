@@ -60,6 +60,16 @@ class View:
         :return: HTML String
         """
 
+        # URLs to category images for third column in popup
+        category_image_urls = {
+            'general': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/general.png?raw=true',
+            'business': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/business.png?raw=true',
+            'technology': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/technology.png?raw=true',
+            'science': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/science.png?raw=true',
+            'health': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/health.png?raw=true',
+            'sports': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/sports.png?raw=true'
+            }
+
         html_table = f"""
                 <table>
                     <tr>
@@ -71,7 +81,8 @@ class View:
         assert len(three_letter_iso_id) == 3
 
         df_filtered_articles = controllerObject.getArticlesByCategories(selected_categories)
-        df_filtered_articles = df_filtered_articles[df_filtered_articles['country'].str.lower() == three_letter_iso_id.lower()]
+        df_filtered_articles = df_filtered_articles[
+            df_filtered_articles['country'].str.lower() == three_letter_iso_id.lower()]
         if three_letter_iso_id == "deu" or three_letter_iso_id == "usa":  # TODO: Delete
             print("Country name: " + three_letter_iso_id)
             print("Filtered DF: " + df_filtered_articles.head(5))
@@ -79,7 +90,7 @@ class View:
             html_table_row = f"""<tr>
                 <td><img class="thumbnail" src={row['urlToImage']}></td>
                 <td><a href={row['url']} target="_blank">{row['title']}</a></td>
-                <td>{row['category']}</td>
+                <td style="text-align: center;"><img class="outlet-logo" src={category_image_urls[row['category']]}></td>
             </tr>
             """
             html_table = html_table + html_table_row
@@ -97,8 +108,9 @@ class View:
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
-            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'], selected_categories) # TODO: Comment for testing
-            #html_table = ""  # TODO: Decomment for testing
+            html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'],
+                                                         selected_categories)  # TODO: Comment for testing
+            # html_table = ""  # TODO: Decomment for testing
             html = f"""
             <style>
                 body {{
@@ -126,6 +138,10 @@ class View:
             
                 .thumbnail {{
                     width: 100;
+                }}
+
+                .outlet-logo {{
+                    width: 30;
                 }}
             
                 a {{
@@ -175,7 +191,7 @@ class View:
                 ).add_to(m1)
 
             # Add day/nighttime overlay to map
-            #m1.add_child(plugins.Terminator())
+            # m1.add_child(plugins.Terminator())
 
         return m1
 
@@ -210,8 +226,6 @@ class View:
         self.saveMapHTML(loaded_map_object)
 
 
-
-
 def auto_open(path, map_object):
     """
     Creates HTML file of map_object and automatically opens it in default web browser.
@@ -229,7 +243,7 @@ def auto_open(path, map_object):
 # Instantiate a View() object
 viewObject = View()
 # Create map and open it
-#auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories()))
+auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories()))
 
 # OLD CODE BELOW
 # # add marker one by one on the map

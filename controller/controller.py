@@ -1,4 +1,5 @@
 from model.newsAPI_scraper import modelObject
+import pandas as pd  # TODO: Delete. Only needed for testing
 
 
 class Controller:
@@ -12,7 +13,7 @@ class Controller:
     def __init__(self):
         # Make 'general' the default selected category
         self.selected_categories = ['general']
-        self.updateArticleData() # TODO: Comment for testing
+        self.updateArticleData()  # TODO: Comment for testing
         pass
 
     def getSelectedCategories(self):
@@ -47,18 +48,19 @@ class Controller:
         print('DATA UPDATE TRIGGERED')
         # Categories supported by NewsAPI
         # categories = ['general', 'technology', 'business', 'science', 'sports', 'health'] # TODO: Commented for testing
-        categories = ['general']  # TODO: Delete
+        categories = ['general', 'technology']  # TODO: Delete
 
         # Drops all data in Article Data and assigns it to new object
         df_newArticleData = self.getFullArticleData()[0:0]
 
         for category in categories:
             print("Next category to be parsed: " + category)
-            raw_api_response_dict = modelObject.scrape_newsAPI(category)
-            transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
-            translated_data = modelObject.translateArticleData(transformed_data)
-            df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
+            # raw_api_response_dict = modelObject.scrape_newsAPI(category)
+            # transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
+            # translated_data = modelObject.translateArticleData(transformed_data)
+            # df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
+        df_newArticleData = pd.read_csv("../data/df_articles_testing.csv", encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
         modelObject.storeArticleData(df_newArticleData)
 
     def searchArticleData(self, keyword):

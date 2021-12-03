@@ -44,14 +44,15 @@ app.layout = html.Div(children=[
     ], style={'text-align': 'center'}),
 
     html.Div(children=[
-        dcc.Input(value='Search...', type='text',
+        dcc.Input(placeholder='Search...', type='text',
                   style={'width': '300px',
                          'height': '30px',
                          'font-family': 'Corbel',
                          'color': 'grey',
                          'margin-bottom': '20px',
                          'margin-top': '5px',
-                         'margin-left': '20px'}),
+                         'margin-left': '20px',
+                         'border-radius': '3px'}),
         html.Button(id='general',
                     children=['general'],
                     n_clicks=0,
@@ -83,14 +84,24 @@ app.layout = html.Div(children=[
                     style=white_button_style
                     )
     ], style={'display': 'flex', 'flex-direction': 'row'}),
-    html.Iframe(
-        id='map',
-        srcDoc=open('map.html', 'r').read(),
-        style={
-            'flex-grow': '1',
-            'height': '80vh',
-            'margin': '0',
-            'padding': '0'}
+    dcc.Loading(
+        id='map-loading',
+        children=[html.Iframe(
+            id='map',
+            srcDoc=open('map.html', 'r').read(),
+            style={'flex-grow': '1',
+                   'height': '80vh',
+                   'width': '100%',
+                   'margin': '0',
+                   'padding': '0'}
+        )],
+        type='circle',
+        style={'flex-grow': '1',
+               'height': '80vh',
+               'width': '100%',
+               'margin': '0',
+               'padding': '0',
+               'color': '#BA0020'}
     ),
     html.Div(id='hidden-div1', style={'display': 'none'}),
     html.Div(id='hidden-div2', style={'display': 'none'}),
@@ -110,7 +121,8 @@ app.layout = html.Div(children=[
      dash.dependencies.Input('science', 'n_clicks'),
      dash.dependencies.Input('business', 'n_clicks'),
      dash.dependencies.Input('sports', 'n_clicks')])
-def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n_clicks, business_n_clicks, sports_n_clicks):
+def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n_clicks, business_n_clicks,
+               sports_n_clicks):
     viewObject.refreshMap()
     if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0:
         return dash.no_update
@@ -219,9 +231,6 @@ def change_categories(n_clicks, id):
     else:
         controllerObject.deselectCategory(id)
     return id
-
-
-
 
 
 if __name__ == '__main__':
