@@ -10,11 +10,31 @@ class Controller:
     """
 
     def __init__(self):
+        # Make 'general' the default selected category
+        self.selected_categories = ['general']
         self.updateArticleData() # TODO: Comment for testing
         pass
 
+    def getSelectedCategories(self):
+        return self.selected_categories
+
+    def selectCategory(self, category):
+        if category not in self.getSelectedCategories():
+            self.selected_categories.append(category)
+            print("New category selected: " + category)
+            print(self.getSelectedCategories())
+
+    def deselectCategory(self, category):
+        if category in self.getSelectedCategories():
+            self.selected_categories.remove(category)
+            print("Category de-selected: " + category)
+            print(self.getSelectedCategories())
+
     def getTopArticles(self):
         return modelObject.getTopArticles()
+
+    def getArticlesByCategories(self, categories):
+        return modelObject.getArticlesByCategories(categories)
 
     def getFullArticleData(self):
         return modelObject.getFullArticleData()
@@ -24,11 +44,22 @@ class Controller:
         Triggers scraper and updates database.
         :return:
         """
-        raw_api_response_dict = modelObject.scrape_newsAPI()
-        transformed_data = modelObject.transform_article_data(raw_api_response_dict)
-        translated_data = modelObject.translateArticleData(transformed_data)
-        modelObject.storeArticleData(translated_data)
+        print('DATA UPDATE TRIGGERED')
+        # Categories supported by NewsAPI
+        # categories = ['general', 'technology', 'business', 'science', 'sports', 'health'] # TODO: Commented for testing
+        categories = ['general']  # TODO: Delete
 
+        # Drops all data in Article Data and assigns it to new object
+        df_newArticleData = self.getFullArticleData()[0:0]
+
+        for category in categories:
+            print("Next category to be parsed: " + category)
+            raw_api_response_dict = modelObject.scrape_newsAPI(category)
+            transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
+            translated_data = modelObject.translateArticleData(transformed_data)
+            df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
+
+        modelObject.storeArticleData(df_newArticleData)
 
     def searchArticleData(self, keyword):
         """

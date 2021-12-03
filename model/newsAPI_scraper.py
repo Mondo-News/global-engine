@@ -11,12 +11,12 @@ class Model:
         api_key_1 = '07288a2d35394938b113ad3cf504d9cd'
         api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
 
-        # API Key for deepl
+        # The deepl Translator API Key
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
-        self.country_codes_top15 = ['de', 'us'] # For testing
-        #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
+        self.country_codes_top15 = ['fr']  # For testing TODO: Delete
+        # self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn'] # TODO: Replace test variable with commented real list
         self.df_articles = pd.DataFrame()
 
@@ -28,38 +28,39 @@ class Model:
         # 'ua', 'us', 've', 'za'] self.country_codes_g20 = ['ar','au','br','de','fr','in','id','it','jp','ca','mx',
         # 'ru','sa','za', 'kr','tr','gb','us','cn']
 
-    def scrape_newsAPI(self):
+    def scrape_newsAPI(self, category):
         """
         This functions scrapes data from the NewsAPI and stores it into the top_headlines dictionary
         :return: Dict with raw API response from NewsAPI
         """
+
         top_headlines = {}
 
         for country_code in self.country_codes_top15:
-            print("country for next request: " + country_code)
+            print("Country for next NewsAPI request: " + country_code)
             if country_code in ['au', 'gb', 'us', 'za', 'in', 'ca']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='en')
             elif country_code in ['br']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='pt')
             elif country_code in ['mx', 'ar']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='es')
             elif country_code in ['sa']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='ar')
             elif country_code in ['cn']:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code, language='zh')
             else:
-                top_headlines[country_code] = self.newsAPI.get_top_headlines(category='general',
+                top_headlines[country_code] = self.newsAPI.get_top_headlines(category=category,
                                                                              country=country_code,
                                                                              language=country_code)
 
         return top_headlines
 
-    def transform_article_data(self, raw_api_response_dict):
+    def transform_article_data(self, raw_api_response_dict, category):
         """
         Transforms the response dictionary from scrape_data() into a pandas dataframe by mapping the relevant
         data to predefined columns.
@@ -72,12 +73,13 @@ class Model:
                      'publishedAt'])
 
         for country in raw_api_response_dict:
-            print(country)
-            country_dict = {'country': [], 'source': [], 'title': [], 'author': [], 'description': [], 'content': [],
+            country_dict = {'country': [], 'category': [], 'source': [], 'title': [], 'author': [], 'description': [],
+                            'content': [],
                             'url': [], 'urlToImage': [], 'publishedAt': []}
 
             for article in raw_api_response_dict[country]['articles']:
                 country_dict['country'].append(utils.convertIsoCodes_2_to_3(country))
+                country_dict['category'].append(category)
                 country_dict['source'].append(article['source']['name'])
                 country_dict['title'].append(article['title'])
                 country_dict['author'].append(article['author'])
@@ -92,15 +94,16 @@ class Model:
 
         return df
 
-    def storeArticleData(self,  transformed_article_data):
+    def storeArticleData(self, transformed_article_data):
         """
         Overwrties df_article with given transformed data frame
         :param transformed_article_data: Pandas data frame with transformed article data
         :return: None
         """
         self.df_articles = transformed_article_data
-        print("New Article Data: ") # TODO: Delete
-        print(self.df_articles.head()) # TODO: Delete
+        print("New Article Data is being stored: ")
+        print(self.getFullArticleData()[['url', 'category']].head())
+        # self.df_articles.to_csv("df_articles.csv", index=False, encoding="utf-8-sig") # TODO: Delete
 
     def getFullArticleData(self):
         """
@@ -114,8 +117,28 @@ class Model:
         Filters for topmost five articles per country of the full df_article data frame
         :return: Filtered pandas data frame
         """
-        topArticles = self.df_articles.groupby('country').head(5)
+        topArticles = self.getFullArticleData().groupby('country').head(5)
         return topArticles
+
+    def getArticlesByCategories(self, filter_categories):
+        """
+        Filters full article data by selected categories from the buttons in the UI.
+        :param filter_categories: List of categories to be filtered for
+        :return: Filtered pandas dataframe
+        """
+        # Categories supported by NewsAPI
+        newsAPI_categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
+
+        assert type(filter_categories) is list
+        assert [cat in newsAPI_categories for cat in filter_categories] or not filter_categories
+
+        # Filter full article data for input categories
+        boolean_series = self.getFullArticleData()['category'].isin(filter_categories)
+        filtered_articles = self.getFullArticleData()[boolean_series]
+        # Select top five articles per country per category
+        top5_filtered_articles = filtered_articles.groupby(['country', 'category']).head(5)
+
+        return top5_filtered_articles
 
     def getThreeLetterIsoCodes(self):
         """
@@ -142,16 +165,16 @@ class Model:
         try:
 
             news_df['title'] = news_df['title'].apply(lambda title:
-                                                            self.translator.translate_text(title, target_lang="EN-GB"))
+                                                      self.translator.translate_text(title, target_lang='EN-GB'))
 
             # TODO: If translation of description and content is needed, decomment part below
             # news_df['description'] = news_df['description'].apply(lambda description:
-            #                                                             self.translator.translate_text(description,
-            #                                                                                            target_lang="EN-GB"))
+            #                                                       self.translator.translate_text(description,
+            #                                                                                      target_lang='EN-GB'))
             #
             # news_df['content'] = news_df['content'].apply(lambda content:
-            #                                                     self.translator.translate_text(content,
-            #                                                                                    target_lang="EN-GB"))
+            #                                               self.translator.translate_text(content,
+            #                                               target_lang='EN-GB'))
         except ValueError as e:
             print("Error occurred: " + str(e))
             print("A empty text cannot be translated. Skipping this one.")
@@ -162,8 +185,6 @@ class Model:
 
 # Instantiate a View() object
 modelObject = Model()
-
-
 
 # OLD CODE: Code for storing pandas df as csv in current directory
 # modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig")
