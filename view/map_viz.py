@@ -2,7 +2,6 @@ import json
 import urllib
 import webbrowser
 import folium
-from folium import plugins
 from controller.controller import controllerObject
 from utils import utils
 import ssl
