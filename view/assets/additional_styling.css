@@ -2,3 +2,13 @@
   color: white; #replace blue with whatever color your want your font to be 
   opacity: 1; /* Firefox */
 }
+table {
+    table-layout: fixed;
+    width: 100%;
+    height: 100px;
+    font-family: Corbel;
+    vertical-align: middle;
+}
+th {
+    font-family: corbel;
+}

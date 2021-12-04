@@ -19,118 +19,122 @@ black_button_style = {'background-color': 'black',
                       'font-weight': 'bold'}
 
 white_button_style = {'background-color': 'white',
-                    'color': 'black',
-                    'height': '45px',
-                    'width': '160px',
-                    'border': '0px',
-                    'margin-left': '0px',
-                    'margin-bottom': '0px',
-                    'font-family': 'Corbel',
-                    'font-size': '14pt',
-                    'font-weight': 'bold'}
+                      'color': 'black',
+                      'height': '45px',
+                      'width': '160px',
+                      'border': '0px',
+                      'margin-left': '0px',
+                      'margin-bottom': '0px',
+                      'font-family': 'Corbel',
+                      'font-size': '14pt',
+                      'font-weight': 'bold'}
 
 app.layout = html.Div(children=[
-        html.Div(children=[
-            html.H1('Mondo News', style={'font-size': '56pt',
-                                         'font-family': 'Old London',
-                                         'margin-bottom': '0px',
-                                         'margin-top': '5px',
-                                         'padding-bottom': '0px'}),
-            html.P('Your visual global news platform',
-                   style={'color': '#968C83',
-                          'font-size': '16pt',
-                          'font-family': 'Georgia',
-                          'font-style': 'italic',
-                          'margin-top': '10px',
-                          'padding-top': '0px'}),
-        ], style={'text-align': 'center'}),
+    html.Div(children=[
+        html.H1('Mondo News', style={'font-size': '56pt',
+                                     'font-family': 'Old London',
+                                     'margin-bottom': '0px',
+                                     'margin-top': '5px',
+                                     'padding-bottom': '0px'}),
+        html.P('Your visual global news platform',
+               style={'color': '#968C83',
+                      'font-size': '16pt',
+                      'font-family': 'Georgia',
+                      'font-style': 'italic',
+                      'margin-top': '10px',
+                      'padding-top': '0px'}),
+    ], style={'text-align': 'center'}),
 
-        html.Div(children=[
-            dcc.Input(placeholder='Search...', type='text',
-                      id='search',
-                      debounce=True,
-                      style={'width': '350px',
-                             'height': '38px',
-                             'font-family': 'Corbel',
-                             'border': '0px',
-                             'font-size': '14pt',
-                             'color': 'white',
-                             'background-color': 'black',
-                             'margin-bottom': '0',
-                             'margin-top': '1px',
-                             'margin-left': '10px'}),
-            html.Button(id='general',
-                        children=['General'],
-                        n_clicks=0,
-                        style=black_button_style
-                        ),
-            html.Button(id='technology',
-                        children=['Technology'],
-                        n_clicks=0,
-                        style=black_button_style
-                        ),
-            html.Button(id='health',
-                        children=['Health'],
-                        n_clicks=0,
-                        style=black_button_style
-                        ),
-            html.Button(id='science',
-                        children=['Science'],
-                        n_clicks=0,
-                        style=black_button_style
-                        ),
-            html.Button(id='business',
-                        children=['Business'],
-                        n_clicks=0,
-                        style=black_button_style
-                        ),
-            html.Button(id='sports',
-                        children=['Sports'],
-                        n_clicks=0,
-                        style=black_button_style
-                        )
-        ], style={'display': 'flex', 'flex-direction': 'row', 'background-color': 'black'}),
-        dcc.Loading(
-            id='map-loading',
-            children=[html.Iframe(
-                id='map',
-                srcDoc=open('map.html', 'r').read(),
-                style={'flex-grow': '1',
-                       'height': '80vh',
-                       'width': '100%',
-                       'margin': '0',
-                       'padding': '0'}
-            )],
-            type='circle',
+    html.Div(children=[
+        dcc.Input(placeholder='Search...', type='text',
+                  id='search',
+                  debounce=True,
+                  style={'width': '350px',
+                         'height': '38px',
+                         'font-family': 'Corbel',
+                         'border': '0px',
+                         'font-size': '14pt',
+                         'color': 'white',
+                         'background-color': 'black',
+                         'margin-bottom': '0',
+                         'margin-top': '1px',
+                         'margin-left': '10px'}),
+        html.Button(id='general',
+                    children=['General'],
+                    n_clicks=0,
+                    style=black_button_style
+                    ),
+        html.Button(id='technology',
+                    children=['Technology'],
+                    n_clicks=0,
+                    style=black_button_style
+                    ),
+        html.Button(id='health',
+                    children=['Health'],
+                    n_clicks=0,
+                    style=black_button_style
+                    ),
+        html.Button(id='science',
+                    children=['Science'],
+                    n_clicks=0,
+                    style=black_button_style
+                    ),
+        html.Button(id='business',
+                    children=['Business'],
+                    n_clicks=0,
+                    style=black_button_style
+                    ),
+        html.Button(id='sports',
+                    children=['Sports'],
+                    n_clicks=0,
+                    style=black_button_style
+                    )
+    ], style={'display': 'flex', 'flex-direction': 'row', 'background-color': 'black'}),
+    dcc.Loading(
+        id='map-loading',
+        children=[html.Iframe(
+            id='map',
+            srcDoc=open('map.html', 'r').read(),
             style={'flex-grow': '1',
                    'height': '80vh',
                    'width': '100%',
                    'margin': '0',
-                   'padding': '0'},
-            color='black'
-        ),
-        html.Div(id='hidden-div1', style={'display': 'none'}),
-        html.Div(id='hidden-div2', style={'display': 'none'}),
-        html.Div(id='hidden-div3', style={'display': 'none'}),
-        html.Div(id='hidden-div4', style={'display': 'none'}),
-        html.Div(id='hidden-div5', style={'display': 'none'}),
-        html.Div(id='hidden-div6', style={'display': 'none'}),
-        html.Div(id='hidden-div7', style={'display': 'none'}),
-        html.Table(
-            children=[
-                html.Th([html.Td([html.P("Mondo News")], style={'text-align': 'center'})],style={'text-align': 'center'}),
-                html.Th([html.Td([html.P("Mondo News")], style={'text-align': 'center'})],style={'text-align': 'center'}),
-                html.Th([html.Td([html.Img(src=app.get_asset_url('hertie-logo.png'), width='200px')], style={'text-align': 'right'})], style={'text-align': 'right'})
-            ],
-            style={
-                'width': '100%',
-                'height': '200px',
-                'text-align': 'center'
-            }
-        )
-
-
-    ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
+                   'padding': '0'}
+        )],
+        type='circle',
+        style={'flex-grow': '1',
+               'height': '80vh',
+               'width': '100%',
+               'margin': '0',
+               'padding': '0'},
+        color='black'
+    ),
+    html.Div(id='hidden-div1', style={'display': 'none'}),
+    html.Div(id='hidden-div2', style={'display': 'none'}),
+    html.Div(id='hidden-div3', style={'display': 'none'}),
+    html.Div(id='hidden-div4', style={'display': 'none'}),
+    html.Div(id='hidden-div5', style={'display': 'none'}),
+    html.Div(id='hidden-div6', style={'display': 'none'}),
+    html.Div(id='hidden-div7', style={'display': 'none'}),
+    html.Table(
+        [html.Tr([
+            html.Th(html.P([html.A([html.Img(src=app.get_asset_url('github-logo.png'), width='60px')],
+                                   href="https://github.com/Mondo-News/global-engine", target="__blank")],
+                           style={'text-align': 'left',
+                                  'font-family': 'Corbel',
+                                  'font-size': '12pt'})),
+            html.Th(html.P(["Mondo News",
+                            html.Br(),
+                            "Please reach out via ",
+                            html.A(["Email"], href="mailto:stroebl.benedikt@gmail.com", style={'color': 'black'})],
+                           style={'text-align': 'center',
+                                  'font-family': 'Corbel',
+                                  'font-size': '12pt'})),
+            html.Th(html.Img(src=app.get_asset_url('hertie-logo.png'), width='200px'), style={'text-align': 'right'})
+        ],
+        )]
+    )
+], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
 
 
 @app.callback(

@@ -1,4 +1,4 @@
-from model.newsAPI_scraper import modelObject
+from model.model import modelObject
 import pandas as pd  # TODO: Delete. Only needed for testing
 
 
@@ -14,7 +14,7 @@ class Controller:
         # Make 'general' the default selected category
         self.selected_categories = ['general']
         # Make initial API request
-        #self.updateArticleData()
+        # self.updateArticleData()
         pass
 
     def getSelectedCategories(self):
@@ -72,7 +72,8 @@ class Controller:
             # translated_data = modelObject.translateArticleData(transformed_data)
             # df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
-        df_newArticleData = pd.read_csv("../data/df_articles_testing.csv", encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
+        df_newArticleData = pd.read_csv("../data/df_articles_testing.csv",
+                                        encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
         modelObject.storeArticleData(df_newArticleData)
 
     def searchArticleData(self, keyword):

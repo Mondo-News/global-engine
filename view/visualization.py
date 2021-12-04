@@ -70,7 +70,7 @@ class View:
             'science': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/science.png?raw=true',
             'health': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/health.png?raw=true',
             'sports': 'https://github.com/Mondo-News/global-engine/blob/main/data/pictures/sports.png?raw=true'
-            }
+        }
 
         html_table = f"""
                 <table>
@@ -250,29 +250,5 @@ def auto_open(path, map_object):
 # Instantiate a View() object
 viewObject = View()
 # Create map and open it
-#auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories()))
+# auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories())) # TODO: Delete
 
-# OLD CODE BELOW
-# # add marker one by one on the map
-# for i in range(0, len(data)):
-#     html = f"""
-#         <h1> {data.iloc[i]['name']}</h1>
-#         <p>You can use any html here! Let's do a list:</p>
-#         <ul>
-#             <li>Item 1</li>
-#             <li>Item 2</li>
-#         </ul>
-#         </p>
-#         <p>And that's a <a href="https://www.python-graph-gallery.com">link</a></p>
-#         """
-#     iframe = folium.IFrame(html=html, width=200, height=200)
-#     popup = folium.Popup(iframe, max_width=2650)
-#     folium.Marker(
-#         location=[data.iloc[i]['lat'], data.iloc[i]['lon']],
-#         popup=popup,
-#         icon=folium.DivIcon(html=f"""
-#             <div><svg>
-#                 <circle cx="50" cy="50" r="40" fill="#69b3a2" opacity=".4"/>
-#                 <rect x="35", y="35" width="30" height="30", fill="red", opacity=".3"
-#             </svg></div>""")
-#     ).add_to(m1)
