@@ -7,6 +7,8 @@ from controller.controller import controllerObject
 from utils import utils
 import ssl
 
+controllerObject.updateArticleData()
+
 
 class View:
 
@@ -54,7 +56,7 @@ class View:
                 'fillOpacity': 0.50,
                 'weight': 0.1}
 
-    def buildPopupHTMLArticleTable(self, three_letter_iso_id, selected_categories):
+    def buildPopupHTMLArticleTable(self, three_letter_iso_id, selected_categories, query_string=None):
         """
         For a given country 3-Letter ISO this method build the HTML string for the folium Popup need in load_map()
         :return: HTML String
@@ -80,7 +82,12 @@ class View:
         """
         assert len(three_letter_iso_id) == 3
 
-        df_filtered_articles = controllerObject.getArticlesByCategories(selected_categories)
+        # Choose how to filter article data for HTML popup
+        if query_string == '' or query_string is None:
+            df_filtered_articles = controllerObject.getArticlesByCategories(selected_categories)
+        else:
+            df_filtered_articles = controllerObject.getArticlesByKeywordSearch(selected_categories, query_string)
+
         df_filtered_articles = df_filtered_articles[
             df_filtered_articles['country'].str.lower() == three_letter_iso_id.lower()]
         if three_letter_iso_id == "deu" or three_letter_iso_id == "usa":  # TODO: Delete
@@ -97,7 +104,7 @@ class View:
 
         return html_table + "</table>"
 
-    def load_map(self, selected_categories):
+    def load_map(self, selected_categories, query_string=None):
         """
         Creates and renders folium/leaflet map.
         :return: folium map object
@@ -109,7 +116,7 @@ class View:
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
             html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'],
-                                                         selected_categories)  # TODO: Comment for testing
+                                                         selected_categories, query_string)  # TODO: Comment for testing
             # html_table = ""  # TODO: Decomment for testing
             html = f"""
             <style>
@@ -219,9 +226,9 @@ class View:
         html_page = f"{path}"
         map_object.save(html_page)
 
-    def refreshMap(self):
+    def refreshMap(self, query_string=None):
         print('New map is loading...')
-        loaded_map_object = self.load_map(controllerObject.getSelectedCategories())
+        loaded_map_object = self.load_map(controllerObject.getSelectedCategories(), query_string)
         print("Refreshed map.html has been created")
         self.saveMapHTML(loaded_map_object)
 

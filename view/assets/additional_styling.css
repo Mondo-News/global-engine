@@ -1,0 +1,4 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white; #replace blue with whatever color your want your font to be 
+  opacity: 1; /* Firefox */
+}

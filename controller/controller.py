@@ -32,11 +32,22 @@ class Controller:
             print("Category de-selected: " + category)
             print(self.getSelectedCategories())
 
-    def getTopArticles(self):
-        return modelObject.getTopArticles()
-
     def getArticlesByCategories(self, categories):
-        return modelObject.getArticlesByCategories(categories)
+        category_filtered_df = modelObject.getArticlesByCategories(categories)
+
+        # Select top five articles per country per category
+        top5_filtered_df = category_filtered_df.groupby(['country', 'category']).head(5)
+        return top5_filtered_df
+
+    def getArticlesByKeywordSearch(self, categories, query_string):
+
+        category_filtered_df = modelObject.getArticlesByCategories(categories)
+
+        keyword_filtered_df = modelObject.getArticlesByKeywordSearch(query_string, category_filtered_df)
+
+        # Select top five articles per country per category
+        top5_filtered_df = keyword_filtered_df.groupby(['country', 'category']).head(5)
+        return top5_filtered_df
 
     def getFullArticleData(self):
         return modelObject.getFullArticleData()

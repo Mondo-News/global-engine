@@ -3,113 +3,134 @@ from controller.controller import controllerObject
 from view.visualization import viewObject
 from dash import html, dcc
 from dash.dependencies import Input, Output
+import dash_bootstrap_components as dbc
 
 app = dash.Dash(__name__)
 
-white_button_style = {'background-color': 'white',
-                      'color': 'black',
+black_button_style = {'background-color': 'black',
+                      'color': 'white',
                       'height': '45px',
-                      'width': '120px',
-                      'margin-left': '50px',
-                      'margin-bottom': '20px',
+                      'width': '160px',
+                      'border': '0px',
+                      'margin-left': '0px',
+                      'margin-bottom': '0px',
                       'font-family': 'Corbel',
                       'font-size': '12pt',
-                      'border-radius': '5px'}
+                      'font-weight': 'bold'}
 
-red_button_style = {'background-color': '#BA0020',
-                    'color': 'white',
+white_button_style = {'background-color': 'white',
+                    'color': 'black',
                     'height': '45px',
-                    'width': '120px',
-                    'margin-left': '50px',
-                    'margin-bottom': '20px',
+                    'width': '160px',
+                    'border': '0px',
+                    'margin-left': '0px',
+                    'margin-bottom': '0px',
                     'font-family': 'Corbel',
                     'font-size': '14pt',
-                    'border-radius': '5px'}
+                    'font-weight': 'bold'}
 
 app.layout = html.Div(children=[
-    html.Div(children=[
-        html.H1('Mondo News', style={'font-size': '56pt',
-                                     'font-family': 'Old London',
-                                     'margin-bottom': '0px',
-                                     'margin-top': '5px',
-                                     'padding-bottom': '0px'}),
-        html.P('Your visual global news platform',
-               style={'color': '#968C83',
-                      'font-size': '16pt',
-                      'font-family': 'Georgia',
-                      'font-style': 'italic',
-                      'margin-top': '10px',
-                      'padding-top': '0px'}),
-    ], style={'text-align': 'center'}),
+        html.Div(children=[
+            html.H1('Mondo News', style={'font-size': '56pt',
+                                         'font-family': 'Old London',
+                                         'margin-bottom': '0px',
+                                         'margin-top': '5px',
+                                         'padding-bottom': '0px'}),
+            html.P('Your visual global news platform',
+                   style={'color': '#968C83',
+                          'font-size': '16pt',
+                          'font-family': 'Georgia',
+                          'font-style': 'italic',
+                          'margin-top': '10px',
+                          'padding-top': '0px'}),
+        ], style={'text-align': 'center'}),
 
-    html.Div(children=[
-        dcc.Input(placeholder='Search...', type='text',
-                  style={'width': '300px',
-                         'height': '30px',
-                         'font-family': 'Corbel',
-                         'color': 'black',
-                         'margin-bottom': '20px',
-                         'margin-top': '5px',
-                         'margin-left': '20px',
-                         'border-radius': '3px'}),
-        html.Button(id='general',
-                    children=['General'],
-                    n_clicks=0,
-                    style=white_button_style
-                    ),
-        html.Button(id='technology',
-                    children=['Technology'],
-                    n_clicks=0,
-                    style=white_button_style
-                    ),
-        html.Button(id='health',
-                    children=['Health'],
-                    n_clicks=0,
-                    style=white_button_style
-                    ),
-        html.Button(id='science',
-                    children=['Science'],
-                    n_clicks=0,
-                    style=white_button_style
-                    ),
-        html.Button(id='business',
-                    children=['Business'],
-                    n_clicks=0,
-                    style=white_button_style
-                    ),
-        html.Button(id='sports',
-                    children=['Sports'],
-                    n_clicks=0,
-                    style=white_button_style
-                    )
-    ], style={'display': 'flex', 'flex-direction': 'row'}),
-    dcc.Loading(
-        id='map-loading',
-        children=[html.Iframe(
-            id='map',
-            srcDoc=open('map.html', 'r').read(),
+        html.Div(children=[
+            dcc.Input(placeholder='Search...', type='text',
+                      id='search',
+                      debounce=True,
+                      style={'width': '350px',
+                             'height': '38px',
+                             'font-family': 'Corbel',
+                             'border': '0px',
+                             'font-size': '14pt',
+                             'color': 'white',
+                             'background-color': 'black',
+                             'margin-bottom': '0',
+                             'margin-top': '1px',
+                             'margin-left': '10px'}),
+            html.Button(id='general',
+                        children=['General'],
+                        n_clicks=0,
+                        style=black_button_style
+                        ),
+            html.Button(id='technology',
+                        children=['Technology'],
+                        n_clicks=0,
+                        style=black_button_style
+                        ),
+            html.Button(id='health',
+                        children=['Health'],
+                        n_clicks=0,
+                        style=black_button_style
+                        ),
+            html.Button(id='science',
+                        children=['Science'],
+                        n_clicks=0,
+                        style=black_button_style
+                        ),
+            html.Button(id='business',
+                        children=['Business'],
+                        n_clicks=0,
+                        style=black_button_style
+                        ),
+            html.Button(id='sports',
+                        children=['Sports'],
+                        n_clicks=0,
+                        style=black_button_style
+                        )
+        ], style={'display': 'flex', 'flex-direction': 'row', 'background-color': 'black'}),
+        dcc.Loading(
+            id='map-loading',
+            children=[html.Iframe(
+                id='map',
+                srcDoc=open('map.html', 'r').read(),
+                style={'flex-grow': '1',
+                       'height': '80vh',
+                       'width': '100%',
+                       'margin': '0',
+                       'padding': '0'}
+            )],
+            type='circle',
             style={'flex-grow': '1',
                    'height': '80vh',
                    'width': '100%',
                    'margin': '0',
-                   'padding': '0'}
-        )],
-        type='circle',
-        style={'flex-grow': '1',
-               'height': '80vh',
-               'width': '100%',
-               'margin': '0',
-               'padding': '0'},
-        color='#BA0020'
-    ),
-    html.Div(id='hidden-div1', style={'display': 'none'}),
-    html.Div(id='hidden-div2', style={'display': 'none'}),
-    html.Div(id='hidden-div3', style={'display': 'none'}),
-    html.Div(id='hidden-div4', style={'display': 'none'}),
-    html.Div(id='hidden-div5', style={'display': 'none'}),
-    html.Div(id='hidden-div6', style={'display': 'none'})
+                   'padding': '0'},
+            color='black'
+        ),
+        html.Div(id='hidden-div1', style={'display': 'none'}),
+        html.Div(id='hidden-div2', style={'display': 'none'}),
+        html.Div(id='hidden-div3', style={'display': 'none'}),
+        html.Div(id='hidden-div4', style={'display': 'none'}),
+        html.Div(id='hidden-div5', style={'display': 'none'}),
+        html.Div(id='hidden-div6', style={'display': 'none'}),
+        html.Div(id='hidden-div7', style={'display': 'none'}),
+        html.Table(
+            children=[
+                html.Th([html.Td([html.P("Mondo News")], style={'text-align': 'center'})],style={'text-align': 'center'}),
+                html.Th([html.Td([html.P("Mondo News")], style={'text-align': 'center'})],style={'text-align': 'center'}),
+                html.Th([html.Td([html.Img(src=app.get_asset_url('hertie-logo.png'), width='200px')], style={'text-align': 'right'})], style={'text-align': 'right'})
+            ],
+            style={
+                'width': '100%',
+                'height': '200px',
+                'text-align': 'center'
+            }
+        )
 
-], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
+
+    ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
 
 
 @app.callback(
@@ -119,11 +140,16 @@ app.layout = html.Div(children=[
      dash.dependencies.Input('health', 'n_clicks'),
      dash.dependencies.Input('science', 'n_clicks'),
      dash.dependencies.Input('business', 'n_clicks'),
-     dash.dependencies.Input('sports', 'n_clicks')])
+     dash.dependencies.Input('sports', 'n_clicks'),
+     dash.dependencies.Input('search', 'value')])
 def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n_clicks, business_n_clicks,
-               sports_n_clicks):
-    viewObject.refreshMap()
-    if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0:
+               sports_n_clicks, query_string):
+    print('New keyword search with query: ' + str(query_string))
+    if query_string == '' or query_string is None:
+        viewObject.refreshMap()
+    else:
+        viewObject.refreshMap(query_string)
+    if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0 and query_string is None:
         return dash.no_update
     else:
         return open('map.html', 'r').read()
@@ -132,49 +158,49 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
 @app.callback(Output('general', 'style'), [Input('general', 'n_clicks')])
 def change_button_style(n_clicks):
     if (n_clicks % 2) != 0:
-        return white_button_style
+        return black_button_style
     else:
-        return red_button_style
+        return white_button_style
 
 
 @app.callback(Output('technology', 'style'), [Input('technology', 'n_clicks')])
 def change_button_style(n_clicks):
     if (n_clicks % 2) != 0:
-        return red_button_style
-    else:
         return white_button_style
+    else:
+        return black_button_style
 
 
 @app.callback(Output('health', 'style'), [Input('health', 'n_clicks')])
 def change_button_style(n_clicks):
     if (n_clicks % 2) != 0:
-        return red_button_style
-    else:
         return white_button_style
+    else:
+        return black_button_style
 
 
 @app.callback(Output('science', 'style'), [Input('science', 'n_clicks')])
 def change_button_style(n_clicks):
     if (n_clicks % 2) != 0:
-        return red_button_style
-    else:
         return white_button_style
+    else:
+        return black_button_style
 
 
 @app.callback(Output('business', 'style'), [Input('business', 'n_clicks')])
 def change_button_style(n_clicks):
     if (n_clicks % 2) != 0:
-        return red_button_style
-    else:
         return white_button_style
+    else:
+        return black_button_style
 
 
 @app.callback(Output('sports', 'style'), [Input('sports', 'n_clicks')])
 def change_button_style(n_clicks):
     if (n_clicks % 2) != 0:
-        return red_button_style
-    else:
         return white_button_style
+    else:
+        return black_button_style
 
 
 @app.callback(Output('hidden-div1', 'children'), inputs=[Input('general', 'n_clicks'), Input('general', 'id')])

@@ -112,17 +112,25 @@ class Model:
         """
         return self.df_articles
 
-    def getTopArticles(self):
-        """
-        Filters for topmost five articles per country of the full df_article data frame
-        :return: Filtered pandas data frame
-        """
-        topArticles = self.getFullArticleData().groupby('country').head(5)
-        return topArticles
+    def getArticlesByKeywordSearch(self, query_string, category_filtered_df):
+
+        # Convert query to lowercase and remove leading and trailing whitespaces
+        query_string = query_string.lower().strip()
+
+        # Convert title column to list for faster search
+        listed = category_filtered_df['title'].tolist()
+        # Convert all titles to lowercase to match query string
+        listed = [title.lower() for title in listed]
+
+        # Perform search with list to have better performance
+        filtered_df = category_filtered_df[[query_string in title for title in listed]]
+
+        return filtered_df
 
     def getArticlesByCategories(self, filter_categories):
         """
         Filters full article data by selected categories from the buttons in the UI.
+        :param keyword_search_df: Filtered data frame from keyword search that shall be filtered for categories
         :param filter_categories: List of categories to be filtered for
         :return: Filtered pandas dataframe
         """
@@ -132,13 +140,17 @@ class Model:
         assert type(filter_categories) is list
         assert [cat in newsAPI_categories for cat in filter_categories] or not filter_categories
 
-        # Filter full article data for input categories
-        boolean_series = self.getFullArticleData()['category'].isin(filter_categories)
-        filtered_articles = self.getFullArticleData()[boolean_series]
-        # Select top five articles per country per category
-        top5_filtered_articles = filtered_articles.groupby(['country', 'category']).head(5)
+        # Get full article data from class
+        df = self.getFullArticleData()
 
-        return top5_filtered_articles
+        # Filter full article data for input categories
+        boolean_series = df['category'].isin(filter_categories)
+        filtered_articles = df[boolean_series]
+
+        # Sort articles by publishing date
+        filtered_articles = filtered_articles.sort_values(by=['publishedAt'], ascending=False)
+
+        return filtered_articles
 
     def getThreeLetterIsoCodes(self):
         """
