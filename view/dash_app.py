@@ -26,7 +26,7 @@ white_button_style = {'background-color': 'white',
                       'margin-left': '0px',
                       'margin-bottom': '0px',
                       'font-family': 'Corbel',
-                      'font-size': '14pt',
+                      'font-size': '16pt',
                       'font-weight': 'bold'}
 
 app.layout = html.Div(children=[
@@ -118,7 +118,7 @@ app.layout = html.Div(children=[
     html.Div(id='hidden-div7', style={'display': 'none'}),
     html.Table(
         [html.Tr([
-            html.Th(html.P([html.A([html.Img(src=app.get_asset_url('github-logo.png'), width='60px')],
+            html.Th(html.P([html.A([html.Img(src="https://github.com/Mondo-News/global-engine/blob/main/view/assets/github-logo.png?raw=true", width='60px')],
                                    href="https://github.com/Mondo-News/global-engine", target="__blank")],
                            style={'text-align': 'left',
                                   'font-family': 'Corbel',
@@ -130,7 +130,7 @@ app.layout = html.Div(children=[
                            style={'text-align': 'center',
                                   'font-family': 'Corbel',
                                   'font-size': '12pt'})),
-            html.Th(html.Img(src=app.get_asset_url('hertie-logo.png'), width='200px'), style={'text-align': 'right'})
+            html.Th(html.Img(src="https://github.com/Mondo-News/global-engine/blob/main/view/assets/hertie-logo.png?raw=true", width='200px'), style={'text-align': 'right'})
         ],
         )]
     )
