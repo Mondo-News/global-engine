@@ -163,7 +163,7 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
     print('New keyword search with query: ' + str(query_string))
     if query_string == '' or query_string is None:
         print("Used method with emtpy query string input")
-        viewObject.refreshMap()
+        viewObject.refreshMap('')
     else:
         print("Used method with query string input")
         viewObject.refreshMap(query_string)
