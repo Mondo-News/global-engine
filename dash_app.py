@@ -173,53 +173,53 @@ app.layout = serve_layout()
 #     else:
 #         return open(utils.path_map_html_file, 'r').read()
 
-#
-# @app.callback(Output('general', 'style'), [Input('general', 'n_clicks')])
-# def change_button_style(n_clicks):
-#     if (n_clicks % 2) != 0:
-#         return black_button_style
-#     else:
-#         return white_button_style
-#
-#
-# @app.callback(Output('technology', 'style'), [Input('technology', 'n_clicks')])
-# def change_button_style(n_clicks):
-#     if (n_clicks % 2) != 0:
-#         return white_button_style
-#     else:
-#         return black_button_style
-#
-#
-# @app.callback(Output('health', 'style'), [Input('health', 'n_clicks')])
-# def change_button_style(n_clicks):
-#     if (n_clicks % 2) != 0:
-#         return white_button_style
-#     else:
-#         return black_button_style
-#
-#
-# @app.callback(Output('science', 'style'), [Input('science', 'n_clicks')])
-# def change_button_style(n_clicks):
-#     if (n_clicks % 2) != 0:
-#         return white_button_style
-#     else:
-#         return black_button_style
-#
-#
-# @app.callback(Output('business', 'style'), [Input('business', 'n_clicks')])
-# def change_button_style(n_clicks):
-#     if (n_clicks % 2) != 0:
-#         return white_button_style
-#     else:
-#         return black_button_style
-#
-#
-# @app.callback(Output('sports', 'style'), [Input('sports', 'n_clicks')])
-# def change_button_style(n_clicks):
-#     if (n_clicks % 2) != 0:
-#         return white_button_style
-#     else:
-#         return black_button_style
+
+@app.callback(Output('general', 'style'), [Input('general', 'n_clicks')])
+def change_button_style(n_clicks):
+    if (n_clicks % 2) != 0:
+        return black_button_style
+    else:
+        return white_button_style
+
+
+@app.callback(Output('technology', 'style'), [Input('technology', 'n_clicks')])
+def change_button_style(n_clicks):
+    if (n_clicks % 2) != 0:
+        return white_button_style
+    else:
+        return black_button_style
+
+
+@app.callback(Output('health', 'style'), [Input('health', 'n_clicks')])
+def change_button_style(n_clicks):
+    if (n_clicks % 2) != 0:
+        return white_button_style
+    else:
+        return black_button_style
+
+
+@app.callback(Output('science', 'style'), [Input('science', 'n_clicks')])
+def change_button_style(n_clicks):
+    if (n_clicks % 2) != 0:
+        return white_button_style
+    else:
+        return black_button_style
+
+
+@app.callback(Output('business', 'style'), [Input('business', 'n_clicks')])
+def change_button_style(n_clicks):
+    if (n_clicks % 2) != 0:
+        return white_button_style
+    else:
+        return black_button_style
+
+
+@app.callback(Output('sports', 'style'), [Input('sports', 'n_clicks')])
+def change_button_style(n_clicks):
+    if (n_clicks % 2) != 0:
+        return white_button_style
+    else:
+        return black_button_style
 
 
 # @app.callback(Output('hidden-div1', 'children'), inputs=[Input('general', 'n_clicks'), Input('general', 'id')])
@@ -277,7 +277,13 @@ app.layout = serve_layout()
 #     return id
 
 @app.callback(
-    dash.dependencies.Output('map', 'srcDoc'),
+    # Output('general', 'style'),
+    # Output('technology', 'style'),
+    # Output('health', 'style'),
+    # Output('science', 'style'),
+    # Output('business', 'style'),
+    # Output('sports', 'style'),
+    Output('map', 'srcDoc'),
     [dash.dependencies.Input('general', 'n_clicks'),
      dash.dependencies.Input('technology', 'n_clicks'),
      dash.dependencies.Input('health', 'n_clicks'),
@@ -289,6 +295,9 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
                sports_n_clicks, query_string):
     ctx = dash.callback_context
 
+    output_list = []
+
+    # Category Update
     for prop in ctx.triggered:
         if "search.value" != prop['prop_id']:
             id = prop['prop_id'][:len(prop['prop_id']) - 9]
@@ -298,6 +307,20 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
                     controllerObject.selectCategory(id)
                 else:
                     controllerObject.deselectCategory(id)
+
+    # # Button Formatting Update
+    # for prop in ctx.inputs:
+    #     if prop != "search.value":
+    #         if prop == "general.n_clicks":
+    #             if (ctx.inputs[prop] % 2) != 0:
+    #                 output_list.append(black_button_style)
+    #             else:
+    #                 output_list.append(white_button_style)
+    #         else:
+    #             if (ctx.inputs[prop] % 2) != 0:
+    #                 output_list.append(white_button_style)
+    #             else:
+    #                 output_list.append(black_button_style)
 
     print('New keyword search with query: ' + str(query_string))
     if query_string == '' or query_string is None:
@@ -311,6 +334,7 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
         return dash.no_update
     else:
         return open(utils.path_map_html_file, 'r').read()
+
 
 
 if __name__ == '__main__':
