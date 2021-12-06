@@ -16,7 +16,7 @@ black_button_style = {'background-color': 'black',
                       'border': '0px',
                       'margin-left': '0px',
                       'margin-bottom': '0px',
-                      'font-family': 'Corbel',
+                      'font-family': 'corbel',
                       'font-size': '12pt',
                       'font-weight': 'bold'}
 
@@ -27,7 +27,7 @@ white_button_style = {'background-color': 'white',
                       'border': '0px',
                       'margin-left': '0px',
                       'margin-bottom': '0px',
-                      'font-family': 'Corbel',
+                      'font-family': 'corbel',
                       'font-size': '16pt',
                       'font-weight': 'bold'}
 
@@ -36,7 +36,7 @@ def serve_layout():
     app_layout = html.Div(children=[
         html.Div(children=[
             html.H1('Mondo News', style={'font-size': '56pt',
-                                         'font-family': 'Old London',
+                                         'font-family': 'old london',
                                          'margin-bottom': '0px',
                                          'margin-top': '5px',
                                          'padding-bottom': '0px'}),
@@ -55,7 +55,7 @@ def serve_layout():
                       debounce=True,
                       style={'width': '350px',
                              'height': '38px',
-                             'font-family': 'Corbel',
+                             'font-family': 'corbel',
                              'border': '0px',
                              'font-size': '14pt',
                              'color': 'white',
@@ -127,14 +127,14 @@ def serve_layout():
                     width='60px')],
                     href="https://github.com/Mondo-News/global-engine", target="__blank")],
                     style={'text-align': 'left',
-                           'font-family': 'Corbel',
+                           'font-family': 'corbel',
                            'font-size': '12pt'})),
                 html.Th(html.P(["Mondo News",
                                 html.Br(),
                                 "Please reach out via ",
                                 html.A(["Email"], href="mailto:stroebl.benedikt@gmail.com", style={'color': 'black'})],
                                style={'text-align': 'center',
-                                      'font-family': 'Corbel',
+                                      'font-family': 'corbel',
                                       'font-size': '12pt'})),
                 html.Th(html.Img(
                     src="https://github.com/Mondo-News/global-engine/blob/main/assets/hertie-logo.png?raw=true",
@@ -142,36 +142,11 @@ def serve_layout():
             ],
             )]
         )
-    ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
+    ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'corbel'})
     return app_layout
 
 
 app.layout = serve_layout()
-
-
-# @app.callback(
-#     dash.dependencies.Output('map', 'srcDoc'),
-#     [dash.dependencies.Input('general', 'n_clicks'),
-#      dash.dependencies.Input('technology', 'n_clicks'),
-#      dash.dependencies.Input('health', 'n_clicks'),
-#      dash.dependencies.Input('science', 'n_clicks'),
-#      dash.dependencies.Input('business', 'n_clicks'),
-#      dash.dependencies.Input('sports', 'n_clicks'),
-#      dash.dependencies.Input('search', 'value')])
-# def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n_clicks, business_n_clicks,
-#                sports_n_clicks, query_string):
-#     print('New keyword search with query: ' + str(query_string))
-#     if query_string == '' or query_string is None:
-#         print("Used method with emtpy query string input")
-#         viewObject.refreshMap('')
-#     else:
-#         print("Used method with query string input")
-#         viewObject.refreshMap(query_string)
-#
-#     if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0 and query_string is None:
-#         return dash.no_update
-#     else:
-#         return open(utils.path_map_html_file, 'r').read()
 
 
 @app.callback(Output('general', 'style'), [Input('general', 'n_clicks')])
@@ -222,80 +197,17 @@ def change_button_style(n_clicks):
         return black_button_style
 
 
-# @app.callback(Output('hidden-div1', 'children'), inputs=[Input('general', 'n_clicks'), Input('general', 'id')])
-# def change_categories(n_clicks, id):
-#     if (n_clicks % 2) != 0:
-#         controllerObject.deselectCategory(id)
-#     else:
-#         controllerObject.selectCategory(id)
-#     return id
-#
-#
-# @app.callback(Output('hidden-div2', 'children'), inputs=[Input('technology', 'n_clicks'), Input('technology', 'id')])
-# def change_categories(n_clicks, id):
-#     if (n_clicks % 2) != 0:
-#         controllerObject.selectCategory(id)
-#     else:
-#         controllerObject.deselectCategory(id)
-#     return id
-#
-#
-# @app.callback(Output('hidden-div3', 'children'), inputs=[Input('business', 'n_clicks'), Input('business', 'id')])
-# def change_categories(n_clicks, id):
-#     if (n_clicks % 2) != 0:
-#         controllerObject.selectCategory(id)
-#     else:
-#         controllerObject.deselectCategory(id)
-#     return id
-#
-#
-# @app.callback(Output('hidden-div4', 'children'), inputs=[Input('health', 'n_clicks'), Input('health', 'id')])
-# def change_categories(n_clicks, id):
-#     if (n_clicks % 2) != 0:
-#         controllerObject.selectCategory(id)
-#     else:
-#         controllerObject.deselectCategory(id)
-#     return id
-#
-#
-# @app.callback(Output('hidden-div5', 'children'), inputs=[Input('sports', 'n_clicks'), Input('sports', 'id')])
-# def change_categories(n_clicks, id):
-#     if (n_clicks % 2) != 0:
-#         controllerObject.selectCategory(id)
-#     else:
-#         controllerObject.deselectCategory(id)
-#     return id
-#
-#
-# @app.callback(Output('hidden-div6', 'children'), inputs=[Input('science', 'n_clicks'), Input('science', 'id')])
-# def change_categories(n_clicks, id):
-#     if (n_clicks % 2) != 0:
-#         controllerObject.selectCategory(id)
-#         print('Science Button pressed')
-#     else:
-#         controllerObject.deselectCategory(id)
-#     return id
-
-@app.callback(
-    # Output('general', 'style'),
-    # Output('technology', 'style'),
-    # Output('health', 'style'),
-    # Output('science', 'style'),
-    # Output('business', 'style'),
-    # Output('sports', 'style'),
-    Output('map', 'srcDoc'),
-    [dash.dependencies.Input('general', 'n_clicks'),
-     dash.dependencies.Input('technology', 'n_clicks'),
-     dash.dependencies.Input('health', 'n_clicks'),
-     dash.dependencies.Input('science', 'n_clicks'),
-     dash.dependencies.Input('business', 'n_clicks'),
-     dash.dependencies.Input('sports', 'n_clicks'),
-     dash.dependencies.Input('search', 'value')])
+@app.callback(Output('map', 'srcDoc'),
+              [Input('general', 'n_clicks'),
+               Input('technology', 'n_clicks'),
+               Input('health', 'n_clicks'),
+               Input('science', 'n_clicks'),
+               Input('business', 'n_clicks'),
+               Input('sports', 'n_clicks'),
+               Input('search', 'value')])
 def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n_clicks, business_n_clicks,
                sports_n_clicks, query_string):
     ctx = dash.callback_context
-
-    output_list = []
 
     # Category Update
     for prop in ctx.inputs.keys():
@@ -313,20 +225,7 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
                     else:
                         controllerObject.deselectCategory(id)
 
-    # # Button Formatting Update
-    # for prop in ctx.inputs:
-    #     if prop != "search.value":
-    #         if prop == "general.n_clicks":
-    #             if (ctx.inputs[prop] % 2) != 0:
-    #                 output_list.append(black_button_style)
-    #             else:
-    #                 output_list.append(white_button_style)
-    #         else:
-    #             if (ctx.inputs[prop] % 2) != 0:
-    #                 output_list.append(white_button_style)
-    #             else:
-    #                 output_list.append(black_button_style)
-
+    # Map Refresh
     print('New keyword search with query: ' + str(query_string))
     if query_string == '' or query_string is None:
         print("Used method with emtpy query string input")
@@ -339,7 +238,6 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
         return dash.no_update
     else:
         return open(utils.path_map_html_file, 'r').read()
-
 
 
 if __name__ == '__main__':

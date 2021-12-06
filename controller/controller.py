@@ -1,7 +1,6 @@
 from model.model import modelObject
 import pandas as pd  # TODO: Delete. Only needed for testing
 
-
 class Controller:
     """
     The Controller class forms the layer between View and Model to guarantee interchangeability and a common
@@ -14,8 +13,7 @@ class Controller:
         # Make 'general' the default selected category
         self.selected_categories = ['general']
         # Make initial API request
-        # self.updateArticleData()
-        pass
+        #self.updateArticleData()
 
     def getSelectedCategories(self):
         return self.selected_categories
@@ -67,14 +65,16 @@ class Controller:
 
         for category in categories:
             print("Next category to be parsed: " + category)
-            # raw_api_response_dict = modelObject.scrape_newsAPI(category)
-            # transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
-            # translated_data = modelObject.translateArticleData(transformed_data)
-            # df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
+            raw_api_response_dict = modelObject.scrape_newsAPI(category)
+            transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
+            #translated_data = modelObject.translateArticleData(transformed_data)
+            df_newArticleData = df_newArticleData.append(transformed_data, ignore_index=True)
 
-        df_newArticleData = pd.read_csv("https://raw.githubusercontent.com/Mondo-News/global-engine/b58fb8040d4b510cc95d793c81da1a56f14c803f/data/df_articles_testing.csv",
-                                        encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
+        #df_newArticleData = pd.read_csv("https://raw.githubusercontent.com/Mondo-News/global-engine/b58fb8040d4b510cc95d793c81da1a56f14c803f/data/df_articles_testing.csv",
+        #                                 encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
         modelObject.storeArticleData(df_newArticleData)
+
+        modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig")
 
     def searchArticleData(self, keyword):
         """
@@ -98,3 +98,4 @@ class Controller:
 
 
 controllerObject = Controller()
+controllerObject.updateArticleData()

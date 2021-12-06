@@ -15,9 +15,9 @@ class Model:
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
-        self.country_codes_top15 = ['de']  # For testing TODO: Delete
-        # self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
-        #                            'cn'] # TODO: Replace test variable with commented real list
+        self.country_codes_top15 = ['de', 'fr']  # For testing TODO: Delete
+        #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
+        #                            'cn']
         self.df_articles = pd.DataFrame()
 
         self.translator = deepl.Translator(api_key_deepl_1)

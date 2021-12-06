@@ -1,13 +1,10 @@
 import json
-import time
 import urllib
 import webbrowser
 import folium
 from controller.controller import controllerObject
 from utils import utils
 import ssl
-
-controllerObject.updateArticleData()
 
 
 class View:
@@ -116,8 +113,7 @@ class View:
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
             html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'],
-                                                         selected_categories, query_string)  # TODO: Comment for testing
-            # html_table = ""  # TODO: Decomment for testing
+                                                         selected_categories, query_string)
             html = f"""
             <style>
                 body {{
@@ -179,7 +175,7 @@ class View:
             geoj = folium.GeoJson(
                 self.country_json_data['features'][i],
                 name="geojson",
-                zoom_on_click=True,
+                # zoom_on_click=True,
                 style_function=self.styleFuntion,
                 highlight_function=self.highlightFunction
             )
@@ -191,14 +187,11 @@ class View:
             if capital_location is not None:
                 folium.CircleMarker(
                     location=self.getCapitalLocation(self.country_json_data['features'][i]['id']),
-                    radius=5,
+                    radius=1,
                     color="#3186cc",
                     fill=True,
                     fill_color="#3186cc"
                 ).add_to(m1)
-
-            # Add day/nighttime overlay to map
-            # m1.add_child(plugins.Terminator())
 
         return m1
 
@@ -249,4 +242,3 @@ def auto_open(map_object):
 viewObject = View()
 # Create map and open it
 # auto_open(viewObject.load_map(controllerObject.getSelectedCategories())) # TODO: Delete
-
