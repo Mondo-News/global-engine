@@ -95,7 +95,7 @@ app.layout = html.Div(children=[
         id='map-loading',
         children=[html.Iframe(
             id='map',
-            srcDoc=open('view/map.html', 'r').read(),
+            srcDoc=open('../view/map.html', 'r').read(),
             style={'flex-grow': '1',
                    'height': '80vh',
                    'width': '100%',
@@ -157,7 +157,7 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
     if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0 and query_string is None:
         return dash.no_update
     else:
-        return open('view/map.html', 'r').read()
+        return open('../view/map.html', 'r').read()
 
 
 @app.callback(Output('general', 'style'), [Input('general', 'n_clicks')])
