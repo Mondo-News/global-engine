@@ -298,15 +298,20 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
     output_list = []
 
     # Category Update
-    for prop in ctx.triggered:
-        if "search.value" != prop['prop_id']:
-            id = prop['prop_id'][:len(prop['prop_id']) - 9]
-            print("ID: " + id)
-            if prop['value'] is not None:
-                if (prop['value'] % 2) != 0:
-                    controllerObject.selectCategory(id)
+    for prop in ctx.inputs.keys():
+        if "search.value" != prop:
+            id = prop[:len(prop) - 9]
+            if ctx.inputs[prop] is not None:
+                if prop == "general.n_clicks":
+                    if (ctx.inputs[prop] % 2) != 0:
+                        controllerObject.deselectCategory(id)
+                    else:
+                        controllerObject.selectCategory(id)
                 else:
-                    controllerObject.deselectCategory(id)
+                    if (ctx.inputs[prop] % 2) != 0:
+                        controllerObject.selectCategory(id)
+                    else:
+                        controllerObject.deselectCategory(id)
 
     # # Button Formatting Update
     # for prop in ctx.inputs:
