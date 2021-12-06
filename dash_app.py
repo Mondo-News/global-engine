@@ -1,3 +1,5 @@
+import time
+
 import dash
 from utils import utils
 from controller.controller import controllerObject
@@ -157,9 +159,12 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
     else:
         print("Used method with query string input")
         viewObject.refreshMap(query_string)
+
     if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0 and query_string is None:
         return dash.no_update
     else:
+        print("sleeping for 1 sec...")
+        time.sleep(1)
         return open(utils.path_map_html_file, 'r').read()
 
 
