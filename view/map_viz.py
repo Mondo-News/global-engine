@@ -228,8 +228,6 @@ class View:
     def refreshMap(self, query_string=None):
         print('New map is loading...')
         loaded_map_object = self.load_map(controllerObject.getSelectedCategories(), query_string)
-        print("sleeping for 1 sec...")
-        time.sleep(1)
         print("Refreshed map.html has been created")
         self.saveMapHTML(loaded_map_object)
 
