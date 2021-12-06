@@ -221,6 +221,7 @@ class View:
             return None
 
     def saveMapHTML(self, map_object):
+        print(utils.path_map_html_file)
         path = utils.path_map_html_file
         map_object.save(path)
 
