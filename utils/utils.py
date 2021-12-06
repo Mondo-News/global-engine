@@ -1,4 +1,11 @@
 import pycountry
+import os
+
+# PATHS
+
+# Absolute paths to map.html file
+dirname = os.path.dirname(__file__)
+path_map_html_file = os.path.join(dirname, '../view/map.html')
 
 
 def convertIsoCodes_2_to_3(two_letter_iso):

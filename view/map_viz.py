@@ -221,9 +221,8 @@ class View:
             return None
 
     def saveMapHTML(self, map_object):
-        path = "map.html"
-        html_page = f"{path}"
-        map_object.save(html_page)
+        path = utils.path_map_html_file
+        map_object.save(path)
 
     def refreshMap(self, query_string=None):
         print('New map is loading...')
@@ -232,22 +231,21 @@ class View:
         self.saveMapHTML(loaded_map_object)
 
 
-def auto_open(path, map_object):
+def auto_open(map_object):
     """
     Creates HTML file of map_object and automatically opens it in default web browser.
     :param path: Path, where HTML file will be created
     :param map_object: Map Object to be saved and opened
     :return: None
     """
-    html_page = f"{path}"
-    map_object.save(html_page)
+    map_object.save(utils.path_map_html_file)
     # open in browser.
     new = 2
-    webbrowser.open(html_page, new=new)
+    webbrowser.open(utils.path_map_html_file, new=new)
 
 
 # Instantiate a View() object
 viewObject = View()
 # Create map and open it
-# auto_open("map.html", viewObject.load_map(controllerObject.getSelectedCategories())) # TODO: Delete
+# auto_open(viewObject.load_map(controllerObject.getSelectedCategories())) # TODO: Delete
 

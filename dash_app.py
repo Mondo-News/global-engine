@@ -1,11 +1,9 @@
 import dash
+from utils import utils
 from controller.controller import controllerObject
 from view.map_viz import viewObject
 from dash import html, dcc
 from dash.dependencies import Input, Output
-import os
-dirname = os.path.dirname(__file__)
-map_html_file = os.path.join(dirname, 'view/map.html')
 
 app = dash.Dash(__name__)
 
@@ -98,7 +96,7 @@ app.layout = html.Div(children=[
         id='map-loading',
         children=[html.Iframe(
             id='map',
-            srcDoc=open(map_html_file, 'r').read(),
+            srcDoc=open(utils.path_map_html_file, 'r').read(),
             style={'flex-grow': '1',
                    'height': '80vh',
                    'width': '100%',
@@ -160,7 +158,7 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
     if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0 and query_string is None:
         return dash.no_update
     else:
-        return open(map_html_file, 'r').read()
+        return open(utils.path_map_html_file, 'r').read()
 
 
 @app.callback(Output('general', 'style'), [Input('general', 'n_clicks')])
