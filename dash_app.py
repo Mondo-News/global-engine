@@ -6,6 +6,7 @@ from dash import html, dcc
 from dash.dependencies import Input, Output
 
 app = dash.Dash(__name__)
+app.title = 'Mondo News'
 
 server = app.server
 
