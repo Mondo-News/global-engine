@@ -72,7 +72,7 @@ class Controller:
             # translated_data = modelObject.translateArticleData(transformed_data)
             # df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
-        df_newArticleData = pd.read_csv("../data/df_articles_testing.csv",
+        df_newArticleData = pd.read_csv("https://raw.githubusercontent.com/Mondo-News/global-engine/b58fb8040d4b510cc95d793c81da1a56f14c803f/data/df_articles_testing.csv",
                                         encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
         modelObject.storeArticleData(df_newArticleData)
 
