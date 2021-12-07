@@ -7,9 +7,8 @@ sched = BlockingScheduler()
 
 def update_data():
     print("Daily data Update at 9 o'clock started...")
-    controllerObject.updateArticleData()
     print("Daily data update finished successfully!")
 
 
-sched.add_job(update_data(), CronTrigger.from_crontab('* * * * *'))
+sched.add_job(update_data, CronTrigger.from_crontab('* * * * *'))
 sched.start()

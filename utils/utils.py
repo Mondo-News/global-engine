@@ -6,6 +6,7 @@ import os
 # Absolute paths to map.html file
 dirname = os.path.dirname(__file__)
 path_map_html_file = os.path.join(dirname, '../view/map.html')
+path_csv_database = os.path.join(dirname, '../data/df_article_data.csv')
 
 
 def convertIsoCodes_2_to_3(two_letter_iso):

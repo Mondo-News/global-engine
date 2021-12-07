@@ -18,9 +18,8 @@ class Model:
         self.country_codes_top15 = ['de', 'fr']  # For testing TODO: Delete
         #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn']
-        self.df_articles = pd.DataFrame(
-            columns=['country', 'category', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
-                     'publishedAt'])
+        self.df_articles = pd.read_csv(utils.path_csv_database,
+                                         encoding='utf-8-sig')
 
         self.translator = deepl.Translator(api_key_deepl_1)
 

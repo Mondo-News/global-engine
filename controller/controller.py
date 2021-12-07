@@ -1,5 +1,6 @@
 from model.model import modelObject
 import pandas as pd  # TODO: Delete. Only needed for testing
+from utils import utils
 
 
 class Controller:
@@ -71,11 +72,13 @@ class Controller:
             # # translated_data = modelObject.translateArticleData(transformed_data)
             # df_newArticleData = df_newArticleData.append(transformed_data, ignore_index=True)
 
-        df_newArticleData = pd.read_csv("https://raw.githubusercontent.com/Mondo-News/global-engine/b58fb8040d4b510cc95d793c81da1a56f14c803f/data/df_articles_testing.csv",
+        df_newArticleData = pd.read_csv(utils.path_csv_database,
                                          encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
+
         modelObject.storeArticleData(df_newArticleData)
 
-        modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig")
+        # Refresh csv database
+        modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig")
 
     def searchArticleData(self, keyword):
         """

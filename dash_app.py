@@ -141,7 +141,7 @@ def serve_layout():
         ),
         dcc.Interval(
             id='interval-component',
-            interval=10000,  # One day in milliseconds
+            interval=86400000,  # One day in milliseconds
             n_intervals=0
         )
     ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
