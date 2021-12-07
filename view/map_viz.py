@@ -118,12 +118,12 @@ class View:
             <style>
                 @font-face {{
                 font-family: 'Corbel';
-                src: url('Corbel.eot');
-                src: url('Corbel.eot?#iefix') format('embedded-opentype'),
-                    url('Corbel.woff2') format('woff2'),
-                    url('Corbel.woff') format('woff'),
-                    url('Corbel.ttf') format('truetype'),
-                    url('Corbel.svg#Corbel') format('svg');
+                src: url('/Corbel.eot');
+                src: url('/Corbel.eot?#iefix') format('embedded-opentype'),
+                    url('/Corbel.woff2') format('woff2'),
+                    url('/Corbel.woff') format('woff'),
+                    url('/Corbel.ttf') format('truetype'),
+                    url('/Corbel.svg#Corbel') format('svg');
                 font-weight: normal;
                 font-style: normal;
                 font-display: swap;
@@ -131,8 +131,8 @@ class View:
                 
                 @font-face {{
                 font-family: 'Old London';
-                src: url('OldLondon.woff2') format('woff2'),
-                    url('OldLondon.woff') format('woff');
+                src: url('/OldLondon.woff2') format('woff2'),
+                    url('/OldLondon.woff') format('woff');
                 font-weight: normal;
                 font-style: normal;
                 font-display: swap;
