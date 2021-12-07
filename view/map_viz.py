@@ -116,6 +116,15 @@ class View:
                                                          selected_categories, query_string)
             html = f"""
             <style>
+                @font-face {{
+                    font-family: 'corbel';
+                    src: url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true') format('woff2'),
+                        url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff?raw=true') format('woff');
+                    font-weight: normal;
+                    font-style: normal;
+                    font-display: swap;
+                }}
+
                 body {{
                     font-family: corbel;
                 }}
