@@ -138,11 +138,6 @@ def serve_layout():
                     width='200px'), style={'text-align': 'right'})
             ],
             )]
-        ),
-        dcc.Interval(
-            id='interval-component',
-            interval=86400000,  # One day in milliseconds
-            n_intervals=0
         )
     ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
     return app_layout
@@ -238,15 +233,6 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
         return dash.no_update
     else:
         return open(utils.path_map_html_file, 'r').read()
-
-
-@app.callback(Output('page-content', 'id'), [Input('interval-component', 'n_intervals')])
-def update_data(n):
-    print('Daily data update nr. ' + str(n) + ' started...')
-    controllerObject.updateArticleData()
-    print('Daily data update finished successfully!')
-    viewObject.refreshMap()
-    return 'page-content'
 
 
 if __name__ == '__main__':
