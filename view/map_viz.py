@@ -126,7 +126,7 @@ class View:
                 }}
 
                 body {{
-                    font-family: corbel;
+                    font-family: 'corbel';
                 }}
             
                 h1 {{
