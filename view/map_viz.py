@@ -117,7 +117,7 @@ class View:
             html = f"""
             <style>
                 body {{
-                    font-family: Corbel;
+                    font-family: corbel;
                 }}
             
                 h1 {{
