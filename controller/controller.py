@@ -77,9 +77,6 @@ class Controller:
 
         modelObject.storeArticleData(df_newArticleData)
 
-        # Refresh csv database
-        modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig")
-
     def searchArticleData(self, keyword):
         """
         Searches the full df_article data frame of the model and filters for the given keyword from the search.

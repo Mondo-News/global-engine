@@ -104,7 +104,8 @@ class Model:
         self.df_articles = transformed_article_data
         print("New Article Data is being stored: ")
         print(self.getFullArticleData()[['url', 'category']].head())
-        # self.df_articles.to_csv("df_articles.csv", index=False, encoding="utf-8-sig") # TODO: Delete
+        # Refresh csv database
+        modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig")
 
     def getFullArticleData(self):
         """
