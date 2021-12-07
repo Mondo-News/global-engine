@@ -10,6 +10,9 @@ app.title = 'Mondo News'
 
 server = app.server
 
+# Initially refresh map
+viewObject.refreshMap()
+
 black_button_style = {'background-color': 'black',
                       'color': 'white',
                       'height': '45px',
@@ -34,7 +37,7 @@ white_button_style = {'background-color': 'white',
 
 
 def serve_layout():
-    app_layout = html.Div(children=[
+    app_layout = html.Div(id='page-content', children=[
         html.Div(children=[
             html.H1('Mondo News', style={'font-size': '56pt',
                                          'font-family': 'Old London',
@@ -114,13 +117,6 @@ def serve_layout():
                    'padding': '0'},
             color='black'
         ),
-        html.Div(id='hidden-div1', style={'display': 'none'}),
-        html.Div(id='hidden-div2', style={'display': 'none'}),
-        html.Div(id='hidden-div3', style={'display': 'none'}),
-        html.Div(id='hidden-div4', style={'display': 'none'}),
-        html.Div(id='hidden-div5', style={'display': 'none'}),
-        html.Div(id='hidden-div6', style={'display': 'none'}),
-        html.Div(id='hidden-div7', style={'display': 'none'}),
         html.Table(
             [html.Tr([
                 html.Th(html.P([html.A([html.Img(
@@ -142,6 +138,11 @@ def serve_layout():
                     width='200px'), style={'text-align': 'right'})
             ],
             )]
+        ),
+        dcc.Interval(
+            id='interval-component',
+            interval=10000,  # One day in milliseconds
+            n_intervals=0
         )
     ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
     return app_layout
@@ -229,16 +230,23 @@ def update_map(general_n_clicks, technology_n_clicks, health_n_clicks, science_n
     # Map Refresh
     print('New keyword search with query: ' + str(query_string))
     if query_string == '' or query_string is None:
-        print("Used method with emtpy query string input")
-        viewObject.refreshMap('')
+        viewObject.refreshMap()
     else:
-        print("Used method with query string input")
         viewObject.refreshMap(query_string)
 
     if general_n_clicks == technology_n_clicks == health_n_clicks == science_n_clicks == business_n_clicks == sports_n_clicks == 0 and query_string is None:
         return dash.no_update
     else:
         return open(utils.path_map_html_file, 'r').read()
+
+
+@app.callback(Output('page-content', 'id'), [Input('interval-component', 'n_intervals')])
+def update_data(n):
+    print('Daily data update nr. ' + str(n) + ' started...')
+    controllerObject.updateArticleData()
+    print('Daily data update finished successfully!')
+    viewObject.refreshMap()
+    return 'page-content'
 
 
 if __name__ == '__main__':

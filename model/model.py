@@ -18,7 +18,9 @@ class Model:
         self.country_codes_top15 = ['de', 'fr']  # For testing TODO: Delete
         #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn']
-        self.df_articles = pd.DataFrame()
+        self.df_articles = pd.DataFrame(
+            columns=['country', 'category', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
+                     'publishedAt'])
 
         self.translator = deepl.Translator(api_key_deepl_1)
 
@@ -69,7 +71,7 @@ class Model:
 
         # Delete old data and override it with an empty data frame
         df = pd.DataFrame(
-            columns=['country', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
+            columns=['country', 'category', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
                      'publishedAt'])
 
         for country in raw_api_response_dict:
