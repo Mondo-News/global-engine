@@ -1,9 +1,20 @@
-/*
- * corbel
-================================================================================ */
 @font-face {
-    font-family: "Corbel";
-    src: url("../fonts/corbel/corbel.ttf") format("ttf");
-    font-style: normal;
+    font-family: 'Corbel';
+    src: url('fonts/Corbel.woff2') format('woff2'),
+        url('fonts/Corbel.woff') format('woff');
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
+
+@font-face {
+    font-family: 'Old London';
+    src: url('OldLondon.woff2') format('woff2'),
+        url('OldLondon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
