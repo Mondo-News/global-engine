@@ -59,21 +59,21 @@ class Controller:
         """
         print('DATA UPDATE TRIGGERED')
         # Categories supported by NewsAPI
-        # categories = ['general', 'technology', 'business', 'science', 'sports', 'health'] # TODO: Commented for testing
-        categories = ['general', 'technology']  # TODO: Delete
+        categories = ['general', 'technology', 'business', 'science', 'sports', 'health'] # TODO: Commented for testing
+        #categories = ['general', 'technology']  # TODO: Delete
 
         # Drops all data in Article Data and assigns it to new object
         df_newArticleData = self.getFullArticleData()[0:0]
 
         for category in categories:
             print("Next category to be parsed: " + category)
-            # raw_api_response_dict = modelObject.scrape_newsAPI(category)
-            # transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
-            # # translated_data = modelObject.translateArticleData(transformed_data)
-            # df_newArticleData = df_newArticleData.append(transformed_data, ignore_index=True)
+            raw_api_response_dict = modelObject.scrape_newsAPI(category)
+            transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
+            translated_data = modelObject.translateArticleData(transformed_data)
+            df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
-        df_newArticleData = pd.read_csv(utils.path_csv_database,
-                                         encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
+        #df_newArticleData = pd.read_csv(utils.path_csv_database,
+        #                                encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
 
         modelObject.storeArticleData(df_newArticleData)
 
