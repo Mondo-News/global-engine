@@ -115,15 +115,27 @@ class View:
             html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'],
                                                          selected_categories, query_string)
             html = f"""
-            <link rel="preload" href="https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true" as="font" type="font/woff2" crossorigin>
             <style>
                 @font-face {{
-                    font-family: 'Corbel';
-                    src: url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true') format('woff2'),
-                        url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff?raw=true') format('woff');
-                    font-weight: normal;
-                    font-style: normal;
-                    font-display: swap;
+                font-family: 'Corbel';
+                src: url('Corbel.eot');
+                src: url('Corbel.eot?#iefix') format('embedded-opentype'),
+                    url('Corbel.woff2') format('woff2'),
+                    url('Corbel.woff') format('woff'),
+                    url('Corbel.ttf') format('truetype'),
+                    url('Corbel.svg#Corbel') format('svg');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+                }}
+                
+                @font-face {{
+                font-family: 'Old London';
+                src: url('OldLondon.woff2') format('woff2'),
+                    url('OldLondon.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
                 }}
 
                 body {{
