@@ -17,7 +17,7 @@ black_button_style = {'background-color': 'black',
                       'border': '0px',
                       'margin-left': '0px',
                       'margin-bottom': '0px',
-                      'font-family': 'corbel',
+                      'font-family': 'Corbel',
                       'font-size': '12pt',
                       'font-weight': 'bold'}
 
@@ -28,7 +28,7 @@ white_button_style = {'background-color': 'white',
                       'border': '0px',
                       'margin-left': '0px',
                       'margin-bottom': '0px',
-                      'font-family': 'corbel',
+                      'font-family': 'Corbel',
                       'font-size': '16pt',
                       'font-weight': 'bold'}
 
@@ -37,7 +37,7 @@ def serve_layout():
     app_layout = html.Div(children=[
         html.Div(children=[
             html.H1('Mondo News', style={'font-size': '56pt',
-                                         'font-family': 'old london',
+                                         'font-family': 'Old London',
                                          'margin-bottom': '0px',
                                          'margin-top': '5px',
                                          'padding-bottom': '0px'}),
@@ -56,7 +56,7 @@ def serve_layout():
                       debounce=True,
                       style={'width': '350px',
                              'height': '38px',
-                             'font-family': 'corbel',
+                             'font-family': 'Corbel',
                              'border': '0px',
                              'font-size': '14pt',
                              'color': 'white',
@@ -128,14 +128,14 @@ def serve_layout():
                     width='60px')],
                     href="https://github.com/Mondo-News/global-engine", target="__blank")],
                     style={'text-align': 'left',
-                           'font-family': 'corbel',
+                           'font-family': 'Corbel',
                            'font-size': '12pt'})),
                 html.Th(html.P(["Mondo News",
                                 html.Br(),
                                 "Please reach out via ",
                                 html.A(["Email"], href="mailto:stroebl.benedikt@gmail.com", style={'color': 'black'})],
                                style={'text-align': 'center',
-                                      'font-family': 'corbel',
+                                      'font-family': 'Corbel',
                                       'font-size': '12pt'})),
                 html.Th(html.Img(
                     src="https://github.com/Mondo-News/global-engine/blob/main/assets/hertie-logo.png?raw=true",
@@ -143,7 +143,7 @@ def serve_layout():
             ],
             )]
         )
-    ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'corbel'})
+    ], style={'display': 'flex', 'flex-direction': 'column', 'font-family': 'Corbel'})
     return app_layout
 
 

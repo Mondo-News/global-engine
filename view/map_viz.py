@@ -115,9 +115,10 @@ class View:
             html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'],
                                                          selected_categories, query_string)
             html = f"""
+            <link rel="preload" href="https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true" as="font" type="font/woff2" crossorigin>
             <style>
                 @font-face {{
-                    font-family: 'corbel';
+                    font-family: 'Corbel';
                     src: url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true') format('woff2'),
                         url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff?raw=true') format('woff');
                     font-weight: normal;
@@ -126,7 +127,7 @@ class View:
                 }}
 
                 body {{
-                    font-family: 'corbel';
+                    font-family: Corbel;
                 }}
             
                 h1 {{

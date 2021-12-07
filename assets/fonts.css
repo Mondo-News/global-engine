@@ -1,14 +1,19 @@
 @font-face {
-    font-family: 'corbel';
-    src: url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true') format('woff2'),
-        url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff?raw=true') format('woff');
+    font-family: 'Corbel';
+    src: url('Corbel.eot');
+    src: url('Corbel.eot?#iefix') format('embedded-opentype'),
+        url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff2?raw=true') format('woff2'),
+        url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/corbel/Corbel.woff?raw=true') format('woff'),
+        url('Corbel.ttf') format('truetype'),
+        url('Corbel.svg#Corbel') format('svg');
+    src: 
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'old london';
+    font-family: 'Old London';
     src: url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/old_london/OldLondon.woff2?raw=true') format('woff2'),
         url('https://github.com/Mondo-News/global-engine/blob/main/assets/fonts/old_london/OldLondon.woff?raw=true') format('woff');
     font-weight: normal;
