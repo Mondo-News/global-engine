@@ -23,7 +23,7 @@ class Model:
 
         self.df_articles = SQL_connector.readDataFromSQL()
 
-        self.translator = deepl.Translator(api_key_deepl_1)
+        self.translator = deepl.Translator(api_key_deepl_2)
 
     def scrape_newsAPI(self, category):
         """

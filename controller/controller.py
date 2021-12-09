@@ -68,8 +68,8 @@ class Controller:
             print("Next category to be parsed: " + category)
             raw_api_response_dict = modelObject.scrape_newsAPI(category)
             transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
-            # translated_data = modelObject.translateArticleData(transformed_data)
-            df_newArticleData = df_newArticleData.append(transformed_data, ignore_index=True)
+            translated_data = modelObject.translateArticleData(transformed_data)
+            df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
         modelObject.storeArticleData(df_newArticleData)
 
