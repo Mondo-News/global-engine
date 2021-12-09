@@ -1,7 +1,7 @@
 import deepl
 from newsapi import NewsApiClient
 import pandas as pd
-from utils import utils
+from utils import utils, SQL_connector
 
 
 class Model:
@@ -19,8 +19,7 @@ class Model:
         self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
                                     'cn']
         print("CSV is read into data frame")
-        self.df_articles = pd.read_csv(utils.path_csv_database,
-                                         encoding='utf-8-sig')
+        self.df_articles = SQL_connector.readDataFromSQL()
 
         self.translator = deepl.Translator(api_key_deepl_1)
 
@@ -106,12 +105,14 @@ class Model:
         print("New Article Data is being stored: ")
         print(self.getFullArticleData()[['url', 'category']].head())
         # Refresh csv database
-        modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig")
+        #modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig") TODO: Delete
+
+        SQL_connector.writeDataToSQL(transformed_article_data)
 
     def refreshDataFromCSV(self):
-        print("CSV is read into data frame")
-        self.df_articles = pd.read_csv(utils.path_csv_database,
-                                       encoding='utf-8-sig')
+        print("SQL db is read into data frame")
+
+        self.df_articles = SQL_connector.readDataFromSQL()
 
     def getFullArticleData(self):
         """
