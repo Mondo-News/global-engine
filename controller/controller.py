@@ -1,6 +1,4 @@
 from model.model import modelObject
-import pandas as pd  # TODO: Delete. Only needed for testing
-from utils import utils
 
 
 class Controller:
@@ -60,8 +58,8 @@ class Controller:
         """
         print('DATA UPDATE TRIGGERED')
         # Categories supported by NewsAPI
-        categories = ['general', 'technology', 'business', 'science', 'sports', 'health'] # TODO: Commented for testing
-        #categories = ['general', 'technology']  # TODO: Delete
+        categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
+        # categories = ['general', 'technology']  # TODO: Delete
 
         # Drops all data in Article Data and assigns it to new object
         df_newArticleData = self.getFullArticleData()[0:0]
@@ -70,7 +68,7 @@ class Controller:
             print("Next category to be parsed: " + category)
             raw_api_response_dict = modelObject.scrape_newsAPI(category)
             transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
-            #translated_data = modelObject.translateArticleData(transformed_data)
+            # translated_data = modelObject.translateArticleData(transformed_data)
             df_newArticleData = df_newArticleData.append(transformed_data, ignore_index=True)
 
         modelObject.storeArticleData(df_newArticleData)
@@ -97,5 +95,3 @@ class Controller:
 
 
 controllerObject = Controller()
-
-

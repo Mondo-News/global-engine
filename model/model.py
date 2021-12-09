@@ -11,24 +11,18 @@ class Model:
         api_key_1 = '07288a2d35394938b113ad3cf504d9cd'
         api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
         api_key_3 = '8211359a9d754b858ded09f1db22c86d'
+        api_key_4 = 'ad9f4f1f95f241469d57d1605bb47725'
 
         # The deepl Translator API Key
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
-        self.newsAPI = NewsApiClient(api_key=api_key_3)
-        #self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
-        self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
-                                    'cn']
-        print("SQL is read into data frame")
+        self.newsAPI = NewsApiClient(api_key=api_key_4)
+        # self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
+        self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'za', 'gb', 'us', 'cn']
+
         self.df_articles = SQL_connector.readDataFromSQL()
 
         self.translator = deepl.Translator(api_key_deepl_1)
-
-        # self.country_codes = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
-        # 'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx', 'my',
-        # 'ng', 'nl', 'no', 'nz', 'ph', 'pl', 'pt', 'ro', 'rs', 'ru', 'sa', 'se', 'sg', 'si', 'sk', 'th', 'tr', 'tw',
-        # 'ua', 'us', 've', 'za'] self.country_codes_g20 = ['ar','au','br','de','fr','in','id','it','jp','ca','mx',
-        # 'ru','sa','za', 'kr','tr','gb','us','cn']
 
     def scrape_newsAPI(self, category):
         """
@@ -105,13 +99,10 @@ class Model:
         self.df_articles = transformed_article_data
         print("New Article Data is being stored: ")
         print(self.getFullArticleData()[['url', 'category']].head())
-        # Refresh csv database
-        #modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig") TODO: Delete
 
         SQL_connector.writeDataToSQL(transformed_article_data)
 
     def refreshDataFromSQL(self):
-        print("SQL db is read into data frame")
         self.df_articles = SQL_connector.readDataFromSQL()
 
     def getFullArticleData(self):
@@ -201,5 +192,4 @@ modelObject = Model()
 
 # OLD CODE: Code for storing pandas df as csv in current directory
 # modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig") TODO: Delete
-# df_newArticleData = pd.read_csv(utils.path_csv_database,
-#                                         encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
+# df_newArticleData = pd.read_csv(utils.path_csv_database, encoding='utf-8-sig')  # TODO: Delete

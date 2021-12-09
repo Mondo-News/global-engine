@@ -87,9 +87,7 @@ class View:
 
         df_filtered_articles = df_filtered_articles[
             df_filtered_articles['country'].str.lower() == three_letter_iso_id.lower()]
-        if three_letter_iso_id == "deu" or three_letter_iso_id == "usa":  # TODO: Delete
-            print("Country name: " + three_letter_iso_id)
-            print("Filtered DF: " + df_filtered_articles.head(5))
+
         for index, row in df_filtered_articles.iterrows():
             html_table_row = f"""<tr>
                 <td><img class="thumbnail" src={row['urlToImage']}></td>
@@ -264,5 +262,4 @@ def auto_open(map_object):
 
 # Instantiate a View() object
 viewObject = View()
-# Create map and open it
-# auto_open(viewObject.load_map(controllerObject.getSelectedCategories())) # TODO: Delete
+
