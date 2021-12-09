@@ -110,7 +110,7 @@ class View:
         m1 = folium.Map(location=[52.51284693487173, 13.389233110107703], tiles='cartodbpositron', zoom_start=3)
 
         # Refresh Data in model from CSV
-        controllerObject.refreshDataFromCSV()
+        controllerObject.refreshDataFromSQL()
 
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):

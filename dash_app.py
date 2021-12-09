@@ -10,9 +10,6 @@ app.title = 'Mondo News'
 
 server = app.server
 
-# Initially refresh map
-viewObject.refreshMap()
-
 black_button_style = {'background-color': 'black',
                       'color': 'white',
                       'height': '45px',
@@ -37,6 +34,9 @@ white_button_style = {'background-color': 'white',
 
 
 def serve_layout():
+    # Initially refresh map
+    viewObject.refreshMap()
+
     app_layout = html.Div(id='page-content', children=[
         html.Div(children=[
             html.H1('Mondo News', style={'font-size': '56pt',

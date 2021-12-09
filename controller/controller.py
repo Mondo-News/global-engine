@@ -15,8 +15,8 @@ class Controller:
         # Make 'general' the default selected category
         self.selected_categories = ['general']
 
-    def refreshDataFromCSV(self):
-        modelObject.refreshDataFromCSV()
+    def refreshDataFromSQL(self):
+        modelObject.refreshDataFromSQL()
 
     def getSelectedCategories(self):
         return self.selected_categories
@@ -72,9 +72,6 @@ class Controller:
             transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
             #translated_data = modelObject.translateArticleData(transformed_data)
             df_newArticleData = df_newArticleData.append(transformed_data, ignore_index=True)
-
-        #df_newArticleData = pd.read_csv(utils.path_csv_database,
-        #                                encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
 
         modelObject.storeArticleData(df_newArticleData)
 

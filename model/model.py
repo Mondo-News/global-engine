@@ -10,15 +10,16 @@ class Model:
         # We have two NewsAPI api keys for testing
         api_key_1 = '07288a2d35394938b113ad3cf504d9cd'
         api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
+        api_key_3 = '8211359a9d754b858ded09f1db22c86d'
 
         # The deepl Translator API Key
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
-        self.newsAPI = NewsApiClient(api_key=api_key_2)
+        self.newsAPI = NewsApiClient(api_key=api_key_3)
         #self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
         self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
                                     'cn']
-        print("CSV is read into data frame")
+        print("SQL is read into data frame")
         self.df_articles = SQL_connector.readDataFromSQL()
 
         self.translator = deepl.Translator(api_key_deepl_1)
@@ -109,9 +110,8 @@ class Model:
 
         SQL_connector.writeDataToSQL(transformed_article_data)
 
-    def refreshDataFromCSV(self):
+    def refreshDataFromSQL(self):
         print("SQL db is read into data frame")
-
         self.df_articles = SQL_connector.readDataFromSQL()
 
     def getFullArticleData(self):
@@ -188,14 +188,6 @@ class Model:
             news_df['title'] = news_df['title'].apply(lambda title:
                                                       self.translator.translate_text(title, target_lang='EN-GB'))
 
-            # TODO: If translation of description and content is needed, decomment part below
-            # news_df['description'] = news_df['description'].apply(lambda description:
-            #                                                       self.translator.translate_text(description,
-            #                                                                                      target_lang='EN-GB'))
-            #
-            # news_df['content'] = news_df['content'].apply(lambda content:
-            #                                               self.translator.translate_text(content,
-            #                                               target_lang='EN-GB'))
         except ValueError as e:
             print("Error occurred: " + str(e))
             print("A empty text cannot be translated. Skipping this one.")
@@ -209,3 +201,5 @@ modelObject = Model()
 
 # OLD CODE: Code for storing pandas df as csv in current directory
 # modelObject.df_articles.to_csv("df_country_articles.csv", index=False, encoding="utf-8-sig") TODO: Delete
+# df_newArticleData = pd.read_csv(utils.path_csv_database,
+#                                         encoding='utf-8-sig')  # TODO: Delete. Only for testing without API usage
