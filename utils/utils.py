@@ -1,12 +1,14 @@
+"""
+This module provides utility functions and variables that are used throughout the project,
+It provides relative paths and functions to convert country ISO codes.
+"""
 import pycountry
 import os
 
 # PATHS
-
 # Absolute paths to map.html file
 dirname = os.path.dirname(__file__)
 path_map_html_file = os.path.join(dirname, '../view/map.html')
-path_csv_database = os.path.join(dirname, '../data/df_article_data.csv')
 
 
 def convertIsoCodes_2_to_3(two_letter_iso):
