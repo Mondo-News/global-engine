@@ -5,7 +5,6 @@ Additionally, the keyword search and the filtering based on news categories is i
 
 """
 
-
 import deepl
 from newsapi import NewsApiClient
 import pandas as pd
@@ -66,7 +65,7 @@ class Model:
         in the parameter
         """
 
-        top_headlines = {} # Initialize an empty dictionary first
+        top_headlines = {}  # Initialize an empty dictionary first
 
         # Go through all countries specified above and save the raw API response from the NewsAPI in the top_headlines
         # dictionary.
@@ -95,15 +94,15 @@ class Model:
         return top_headlines
 
     def transform_article_data(self, raw_api_response_dict, category):
-       """
-       This function transforms the response dictionary from scrape_newsAPI() into a pandas dataframe
-       by mapping the relevant data to predefined columns.
 
-       :param raw_api_response_dict: The dictionary containing the raw NewsAPI response object for a category
-       :param category: The news category for which the raw_api_response_dict contains news data
-       :return: Transformed article data pandas dataframe
-       """
+        """
+        This function transforms the response dictionary from scrape_newsAPI() into a pandas dataframe
+        by mapping the relevant data to predefined columns.
 
+        :param raw_api_response_dict: The dictionary containing the raw NewsAPI response object for a category
+        :param category: The news category for which the raw_api_response_dict contains news data
+        :return: Transformed article data pandas dataframe
+        """
         # Delete old data and overwrite it with an empty data frame
         df = pd.DataFrame(
             columns=['country', 'category', 'source', 'title', 'author', 'description', 'content', 'url', 'urlToImage',
@@ -140,6 +139,7 @@ class Model:
 
         return df
 
+
     def storeArticleData(self, transformed_article_data):
         """
         This function overwrites the df_article class variable with the transformed data frame given as parameter.
@@ -156,6 +156,7 @@ class Model:
 
         SQL_connector.writeDataToSQL(transformed_article_data)
 
+
     def refreshDataFromSQL(self):
         """
         This function saves the latest full article data as pandas dataframe from the SQL database in the df_article
@@ -164,12 +165,14 @@ class Model:
         """
         self.df_articles = SQL_connector.readDataFromSQL()
 
+
     def getFullArticleData(self):
         """
         Returns latest full article data as pandas dataframe.
         :return: Latest article data as pandas dataframe
         """
         return self.df_articles
+
 
     def getArticlesByKeywordSearch(self, query_string, category_filtered_df):
         """
@@ -198,6 +201,7 @@ class Model:
         filtered_df = category_filtered_df[[query_string in title for title in listed]]
 
         return filtered_df
+
 
     def getArticlesByCategories(self, filter_categories):
         """
@@ -230,6 +234,7 @@ class Model:
 
         return filtered_articles
 
+
     def getThreeLetterIsoCodes(self):
         """
         Get Available three letter Iso country codes for the countries for which there is News data available.
@@ -246,6 +251,7 @@ class Model:
             output_list.append(utils.convertIsoCodes_2_to_3(iso_code))
         return output_list
 
+
     def getTwoLetterIsoCodes(self):
         """
         This function returns the two letter country codes of all countries supported by Mondo News as a list.
@@ -253,6 +259,7 @@ class Model:
         :return: List of two letter country codes of countries supported by Mondo News.
         """
         return self.country_codes
+
 
     def translateArticleData(self, news_df):
         """
