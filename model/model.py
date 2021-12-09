@@ -25,6 +25,8 @@ class Model:
         # Categories supported by NewsAPI
         self.categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
 
+        # The article data of MondoNews is stored in a SQL database.
+        # Here, they are retrieved from that database and stored in df_articles.
         self.df_articles = SQL_connector.readDataFromSQL()
 
     def scrape_newsAPI(self, category):
@@ -188,9 +190,6 @@ class Model:
             pass
 
         return news_df
-
-    def getSupportedCategories(self):
-        return self.categories
 
 
 # Instantiate a View() object
