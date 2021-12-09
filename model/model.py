@@ -15,6 +15,7 @@ class Model:
 
         # The deepl Translator API Key
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
+        api_key_deepl_2 = '888f984b-dd99-fb06-b220-7af59a2f4b84:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_4)
         # self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
