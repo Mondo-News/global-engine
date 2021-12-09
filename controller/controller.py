@@ -14,8 +14,6 @@ class Controller:
     def __init__(self):
         # Make 'general' the default selected category
         self.selected_categories = ['general']
-        # Make initial API request
-        # self.updateArticleData()
 
     def refreshDataFromCSV(self):
         modelObject.refreshDataFromCSV()

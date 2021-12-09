@@ -8,16 +8,16 @@ class Model:
 
     def __init__(self):
         # We have two NewsAPI api keys for testing
-        api_key_2 = '07288a2d35394938b113ad3cf504d9cd'
-        api_key_1 = '79e2b6cce45448e7bbe899ce7e8ece2f'
+        api_key_1 = '07288a2d35394938b113ad3cf504d9cd'
+        api_key_2 = '79e2b6cce45448e7bbe899ce7e8ece2f'
 
         # The deepl Translator API Key
         api_key_deepl_1 = 'cb0199b6-1ddb-f742-5005-64c9e170b5cb:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_2)
-        self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
-        #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
-        #                            'cn']
+        #self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
+        self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
+                                    'cn']
         print("CSV is read into data frame")
         self.df_articles = pd.read_csv(utils.path_csv_database,
                                          encoding='utf-8-sig')
