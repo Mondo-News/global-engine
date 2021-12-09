@@ -139,7 +139,6 @@ class Model:
 
         return df
 
-
     def storeArticleData(self, transformed_article_data):
         """
         This function overwrites the df_article class variable with the transformed data frame given as parameter.
@@ -156,7 +155,6 @@ class Model:
 
         SQL_connector.writeDataToSQL(transformed_article_data)
 
-
     def refreshDataFromSQL(self):
         """
         This function saves the latest full article data as pandas dataframe from the SQL database in the df_article
@@ -165,14 +163,12 @@ class Model:
         """
         self.df_articles = SQL_connector.readDataFromSQL()
 
-
     def getFullArticleData(self):
         """
         Returns latest full article data as pandas dataframe.
         :return: Latest article data as pandas dataframe
         """
         return self.df_articles
-
 
     def getArticlesByKeywordSearch(self, query_string, category_filtered_df):
         """
@@ -201,7 +197,6 @@ class Model:
         filtered_df = category_filtered_df[[query_string in title for title in listed]]
 
         return filtered_df
-
 
     def getArticlesByCategories(self, filter_categories):
         """
@@ -234,7 +229,6 @@ class Model:
 
         return filtered_articles
 
-
     def getThreeLetterIsoCodes(self):
         """
         Get Available three letter Iso country codes for the countries for which there is News data available.
@@ -251,7 +245,6 @@ class Model:
             output_list.append(utils.convertIsoCodes_2_to_3(iso_code))
         return output_list
 
-
     def getTwoLetterIsoCodes(self):
         """
         This function returns the two letter country codes of all countries supported by Mondo News as a list.
@@ -259,7 +252,6 @@ class Model:
         :return: List of two letter country codes of countries supported by Mondo News.
         """
         return self.country_codes
-
 
     def translateArticleData(self, news_df):
         """
@@ -287,6 +279,13 @@ class Model:
             pass
 
         return news_df
+
+    def getSupportedCategories(self):
+        """
+        Returns the list of categories supported in the application
+        :return: List of supported categories
+        """
+        return self.categories
 
 
 # Instantiate a View() object
