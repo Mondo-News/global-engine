@@ -18,6 +18,7 @@ class Model:
         self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
         #self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'sa', 'za', 'gb', 'us',
         #                            'cn']
+        print("CSV is read into data frame")
         self.df_articles = pd.read_csv(utils.path_csv_database,
                                          encoding='utf-8-sig')
 
@@ -106,6 +107,11 @@ class Model:
         print(self.getFullArticleData()[['url', 'category']].head())
         # Refresh csv database
         modelObject.df_articles.to_csv(utils.path_csv_database, index=False, encoding="utf-8-sig")
+
+    def refreshDataFromCSV(self):
+        print("CSV is read into data frame")
+        self.df_articles = pd.read_csv(utils.path_csv_database,
+                                       encoding='utf-8-sig')
 
     def getFullArticleData(self):
         """
