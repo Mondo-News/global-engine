@@ -18,12 +18,11 @@ class Model:
         api_key_deepl_2 = '888f984b-dd99-fb06-b220-7af59a2f4b84:fx'
 
         self.newsAPI = NewsApiClient(api_key=api_key_4)
-        # self.country_codes_top15 = ['de', 'fr', 'us']  # For testing TODO: Delete
+        self.translator = deepl.Translator(api_key_deepl_2)
+
         self.country_codes_top15 = ['ar', 'au', 'br', 'de', 'fr', 'in', 'it', 'ca', 'mx', 'ru', 'za', 'gb', 'us', 'cn']
 
         self.df_articles = SQL_connector.readDataFromSQL()
-
-        self.translator = deepl.Translator(api_key_deepl_2)
 
     def scrape_newsAPI(self, category):
         """

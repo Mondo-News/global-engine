@@ -59,7 +59,6 @@ class Controller:
         print('DATA UPDATE TRIGGERED')
         # Categories supported by NewsAPI
         categories = ['general', 'technology', 'business', 'science', 'sports', 'health']
-        # categories = ['general', 'technology']  # TODO: Delete
 
         # Drops all data in Article Data and assigns it to new object
         df_newArticleData = self.getFullArticleData()[0:0]
