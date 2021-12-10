@@ -114,7 +114,7 @@ class Controller:
             print("Data transformation started for category: " + category)
             transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
             print("Translation started for category: " + category)
-            translated_data = modelObject.translateArticleData(transformed_data)
+            translated_data = modelObject.translateArticleDataDeepTanslator(transformed_data)
             df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 
         # Finally, trigger method to store new data in the SQL db remotely

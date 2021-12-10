@@ -9,6 +9,7 @@ import deepl
 from newsapi import NewsApiClient
 import pandas as pd
 from utils import utils, SQL_connector
+from deep_translator import GoogleTranslator
 
 
 class Model:
@@ -36,7 +37,7 @@ class Model:
         api_key_deepl_2 = '888f984b-dd99-fb06-b220-7af59a2f4b84:fx'
 
         # First we initialise the NewsAPI. In case we need to switch API key, we can to that here.
-        self.newsAPI = NewsApiClient(api_key=api_key_2)
+        self.newsAPI = NewsApiClient(api_key=api_key_3)
 
         # These are the countries that are currently supported by Mondo News. All of them are part of the G20 Group of
         # Countries. Mondo News only supports these 14 yet, as the NewsAPI only offers news from these countries.
@@ -253,7 +254,9 @@ class Model:
         """
         return self.country_codes
 
-    def translateArticleData(self, news_df):
+    # This method is only a back-up translation method to the one below
+    # This is since deepL is not free an only supports 500.000 free characters per month
+    def translateArticleDataDeepL(self, news_df):
         """
         Gets scraped and transformed dataframe with information on all news articles and translates relevant information
         using the Deepl translator API. The API recognizes the original language and translates to British English.
@@ -281,6 +284,28 @@ class Model:
             pass
 
         return news_df
+
+    def translateArticleDataDeepTanslator(self, news_df):
+        """
+        Gets scraped and transformed dataframe with information on all news articles and translates relevant information
+        using the free deep-translator API. The API recognizes the original language and translates to British English.
+        It translates only the title as only the title is used on Mondo News and returns a pandas dataframe which
+        contains the translated headlines for every article instead of the original one. All other columns of the
+        :param news_df: Data frame containing data on all news articles.
+        :return: Article data pandas dataframe with headline (title column) translated into English.
+        """
+        # Create list to temporarily store translated articles
+        translated_article_titles = []
+
+        # Loop over title column in news dataframe and translate every title to English
+        for i, article in news_df.iterrows():
+            translated_article_titles.append(GoogleTranslator(source='auto', target='en').translate(article['title']))
+
+        # Store translated title into article dataframe
+        news_df['title'] = translated_article_titles
+
+        return news_df
+
 
     def getSupportedCategories(self):
         """
