@@ -28,10 +28,11 @@ class View:
         capitals_jsonurl = urllib.request.urlopen(f'{capitals_url}/all.json')
         self.capitals_json_data = json.loads(capitals_jsonurl.read())
 
-    def styleFuntion(self, feature):
+    def styleFuntion(self, feature, iso_ids_with_article_data):
         """
         Styling for choropleth map when not-hovering.
         Returns different styling for countries where there is news data available and where there is not
+        :param iso_ids_with_article_data: List of ISO codes for which there is article data for the respective filters
         :param feature: GEOJson feature
         :return: folium style dict
         """
@@ -44,7 +45,8 @@ class View:
                       'fillOpacity': 0.7,
                       'weight': 0.1}
 
-        if feature['id'].lower() in controllerObject.getAvailableIsoCodes(3):
+        if feature['id'].lower() in controllerObject.getAvailableIsoCodes(3) and feature[
+            'id'].lower() in iso_ids_with_article_data:
             return style_data
         else:
             return style_no_data
@@ -60,13 +62,12 @@ class View:
                 'fillOpacity': 0.50,
                 'weight': 0.1}
 
-    def buildPopupHTMLArticleTable(self, three_letter_iso_id, selected_categories, query_string=None):
+    def buildPopupHTMLArticleTable(self, three_letter_iso_id, df_filtered_articles):
         """
-        For a given country 3-Letter ISO, the list of currently selected categories, and if existing a search query string,
+        For a given country 3-Letter ISO and the filtered article dataframe,
         this method build the HTML-Table string for the folium Popup need in load_map().
+        :param df_filtered_articles: Filtered dataframe for selected categories/search
         :param three_letter_iso_id: 2-Letter ISO code for the country of which the Popup shall be created
-        :param selected_categories: List of currently selected categories by the user
-        :param query_string: Search query string
         :return: HTML-Table string for Iframe in popup
         """
 
@@ -92,12 +93,6 @@ class View:
         # Assert whether ISO code is really three letters long
         assert len(three_letter_iso_id) == 3
 
-        # Choose how to filter article data for HTML popup depending on whether there is a search query or not
-        if query_string == '' or query_string is None:
-            df_filtered_articles = controllerObject.getArticlesByCategories(selected_categories)
-        else:
-            df_filtered_articles = controllerObject.getArticlesByKeywordSearch(selected_categories, query_string)
-
         # Filter dataframe with categories and search string for the country of interest in this popup
         df_filtered_articles = df_filtered_articles[
             df_filtered_articles['country'].str.lower() == three_letter_iso_id.lower()]
@@ -117,9 +112,9 @@ class View:
     def load_map(self, selected_categories, query_string=None):
         """
         Creates and renders folium/leaflet map.
-        :param selected_categories:
-        :param query_string:
-        :return:
+        :param selected_categories: List of currently selected categories by the user
+        :param query_string: If available, then search string inserted by the user
+        :return: Rendered folium map object
         """
         # Create a empty map that focuses on Berlin coordinates
         m1 = folium.Map(location=[52.51284693487173, 13.389233110107703], tiles='cartodbpositron', zoom_start=3)
@@ -127,11 +122,20 @@ class View:
         # Refresh Data in model from SQL db
         controllerObject.refreshDataFromSQL()
 
+        # Choose how to filter article data for HTML popup depending on whether there is a search query or not
+        if query_string == '' or query_string is None:
+            df_filtered_articles = controllerObject.getArticlesByCategories(selected_categories)
+        else:
+            df_filtered_articles = controllerObject.getArticlesByKeywordSearch(selected_categories, query_string)
+
+        # Country codes of filtered data for which there are articles
+        uniqueCountryCodesWithData = df_filtered_articles['country'].dropna().unique()
+
         # add marker one by one on the map
         for i in range(len(self.country_json_data['features'])):
             # Create HTML string for the Popup of the marker
             html_table = self.buildPopupHTMLArticleTable(self.country_json_data['features'][i]['id'],
-                                                         selected_categories, query_string)
+                                                         df_filtered_articles)
             # Concatenate the HTML Table string with the styling and body tags
             html = f"""
             <style>
@@ -217,8 +221,8 @@ class View:
             geoj = folium.GeoJson(
                 self.country_json_data['features'][i],
                 name="geojson",
-                # zoom_on_click=True,
-                style_function=self.styleFuntion,
+                style_function=lambda feature: (
+                    self.styleFuntion(feature, uniqueCountryCodesWithData)),
                 highlight_function=self.highlightFunction
             )
 
