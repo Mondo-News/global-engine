@@ -111,7 +111,9 @@ class Controller:
         for category in categories:
             print("Next category to be parsed: " + category)
             raw_api_response_dict = modelObject.scrape_newsAPI(category)
+            print("Data transformation started for category: " + category)
             transformed_data = modelObject.transform_article_data(raw_api_response_dict, category)
+            print("Translation started for category: " + category)
             translated_data = modelObject.translateArticleData(transformed_data)
             df_newArticleData = df_newArticleData.append(translated_data, ignore_index=True)
 

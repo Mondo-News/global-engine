@@ -36,7 +36,7 @@ class Model:
         api_key_deepl_2 = '888f984b-dd99-fb06-b220-7af59a2f4b84:fx'
 
         # First we initialise the NewsAPI. In case we need to switch API key, we can to that here.
-        self.newsAPI = NewsApiClient(api_key=api_key_4)
+        self.newsAPI = NewsApiClient(api_key=api_key_2)
 
         # These are the countries that are currently supported by Mondo News. All of them are part of the G20 Group of
         # Countries. Mondo News only supports these 14 yet, as the NewsAPI only offers news from these countries.
@@ -272,6 +272,8 @@ class Model:
 
             news_df['title'] = news_df['title'].apply(lambda title:
                                                       self.translator.translate_text(title, target_lang='EN-GB'))
+            # Convert translated title column to string to ensure PostgreSQL DB compatibility
+            news_df['title'] = news_df['title'].astype(str)
 
         except ValueError as e:
             print("Error occurred: " + str(e))
