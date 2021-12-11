@@ -1,8 +1,10 @@
 <H1 align="center">
-    <img src="https://github.com/Mondo-News/global-engine/blob/065deb89e18a021c6d171173a10e643657f7c806/assets/mondo-news_header.PNG?raw=true" width="400px">
+    <img href="https://mondo-news.herokuapp.com/" src="https://github.com/Mondo-News/global-engine/blob/065deb89e18a021c6d171173a10e643657f7c806/assets/mondo-news_header.PNG?raw=true" width="400px">
 </H1>
     
 Our product delivers an interactive world map where users can **visualize the top headlines per country**, within fourteen countries from the Group of Twenty (G20) intergovernmental forum. The target user is someone interested in knowing what is going on from **multicultural worldview**, with it being specially useful for scholars in the fields of public policy and international affairs.
+
+Take a look at Mondo News <a href="https://mondo-news.herokuapp.com/">**here!**</a>
 
 ## Features
 
