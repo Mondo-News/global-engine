@@ -30,8 +30,6 @@ itsdangerous==2.0.1
 Jinja2==3.0.3
 karma-sphinx-theme==0.0.8
 MarkupSafe==2.0.1
-mysql==0.0.3
-mysqlclient==2.1.0
 newsapi-python==0.2.6
 numpy==1.21.4
 packaging==21.3
