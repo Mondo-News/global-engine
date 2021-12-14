@@ -8,8 +8,7 @@ import pandas as pd
 
 # Connect to db with login credentials
 engine = sqlalchemy.create_engine(
-    "postgresql://iadujedbpfsesq:c238ad3f75b43b9fd81c2f56160f1164557561e84c4e75ad778a6b3cbcd39e8b@ec2-54-76-249-45.eu"
-    "-west-1.compute.amazonaws.com:5432/d6pgndjpkhrscm")
+    "postgresql://zwnwqsriotrmek:0904993ac6fd3d85cdb9f290a4f4e70ea532b05bd9cfd5bd14dce8bfeef6d777@ec2-54-217-232-239.eu-west-1.compute.amazonaws.com:5432/dd9gqijjjuook7")
 dirname = os.path.dirname(__file__)
 
 
