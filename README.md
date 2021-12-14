@@ -6,6 +6,8 @@ Our product delivers an interactive world map where users can **visualize the to
 
 Take a look at Mondo News <a href="https://mondo-news.herokuapp.com/">**here!**</a>
 
+See <a href="https://mondo-news.readthedocs.io/en/latest/index.html">**documentation!**</a>
+
 ## Features
 
 Our product is a website with an **interactive globe** that allows the user to zoom in on trending news from specific countries. 
