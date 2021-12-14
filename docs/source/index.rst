@@ -1,5 +1,9 @@
-Welcome to Mondo News's documentation!
-======================================
+.. image:: https://github.com/Mondo-News/global-engine/blob/main/assets/hertie-logo.png?raw=true
+    :width: 400
+    :align: center
+
+Mondo News - Your visual global news platform
+===================================================
 
 .. toctree::
    :maxdepth: 4
