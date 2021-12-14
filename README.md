@@ -6,7 +6,7 @@ Our product delivers an interactive world map where users can **visualize the to
 
 Take a look at Mondo News <a href="https://mondo-news.herokuapp.com/">**here!**</a>
 
-See <a href="https://mondo-news.readthedocs.io/en/latest/index.html">**documentation!**</a>
+See <a href="https://mondo-news.readthedocs.io/en/latest/">**documentation!**</a>
 
 ## Features
 
