@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The View &mdash; Mondo News 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Model" href="model.html" />
+    <link rel="prev" title="Welcome to Mondo News’s documentation!" href="index.html" /> 
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a class="site-nav-toggle hidden-lg-up"><i class="icon-menu"></i></a>
+            <a class="site-title" href="index.html">
+                Mondo News
+            </a>
+        </div>
+    </header>
+
+
+<div class="breadcrumbs-outer hidden-xs-down">
+    <div class="container">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="breadcrumbs">
+    
+      <li><a href="index.html">Docs</a></li>
+        
+      <li>The View</li>
+    
+    
+      <li class="breadcrumbs-aside">
+        
+            
+            <a href="_sources/view.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+</div>
+    </div>
+</div>
+    <div class="main-outer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3 site-nav">
+                    
+<div role="search">
+    <form class="search" action="search.html" method="get">
+        <div class="icon-input">
+            <input type="text" name="q" placeholder="Search" />
+            <span class="icon-search"></span>
+        </div>
+        <input type="submit" value="Go" class="d-hidden" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+                    <div class="site-nav-tree">
+                        
+                            
+                            
+                                <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">The Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">The Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dash_app.html">The Dash App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">The Utils Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sql_connector.html">PostgreSQL Connector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scraper_scheduler.html">Scheduler/Scraper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup Module</a></li>
+</ul>
+
+                            
+                        
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9">
+                    <div class="document">
+                        
+                            
+  <section id="module-view.view">
+<span id="the-view"></span><h1>The View<a class="headerlink" href="#module-view.view" title="Permalink to this headline">¶</a></h1>
+<p>The view module contains all methods needed to create and update the folium map object used in the web application.
+It requests data from the mode ONLY through the controller.</p>
+<blockquote>
+<div><p>utils
+sql_connector
+scraper_scheduler
+setup</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="view.view.View">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">view.view.</span></span><span class="sig-name descname"><span class="pre">View</span></span><a class="headerlink" href="#view.view.View" title="Permalink to this definition">¶</a></dt>
+<dd><p>The view’s job is to decide what the user will see on their screen and represents the current model state.
+It contains methods to render the folium map depending on the data in the model state.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="view.view.View.buildPopupHTMLArticleTable">
+<span class="sig-name descname"><span class="pre">buildPopupHTMLArticleTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">three_letter_iso_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_filtered_articles</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.view.View.buildPopupHTMLArticleTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given country 3-Letter ISO and the filtered article dataframe,
+this method build the HTML-Table string for the folium Popup need in load_map().
+:param df_filtered_articles: Filtered dataframe for selected categories/search
+:param three_letter_iso_id: 2-Letter ISO code for the country of which the Popup shall be created
+:return: HTML-Table string for Iframe in popup</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.view.View.getCapitalLocation">
+<span class="sig-name descname"><span class="pre">getCapitalLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">country_iso_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.view.View.getCapitalLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns capital location data for requested country
+:param country_iso_code: Country ISO code in either 2- or 3-Letter format
+:return: Capital Location OR None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.view.View.highlightFunction">
+<span class="sig-name descname"><span class="pre">highlightFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.view.View.highlightFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Styling for choropleth map when mouse is hovering
+:param feature: GEOJson feature that is automatically passed by folium and has to be included as a parameter here.
+:return: folium style dict</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.view.View.load_map">
+<span class="sig-name descname"><span class="pre">load_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.view.View.load_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and renders folium/leaflet map.
+:param selected_categories: List of currently selected categories by the user
+:param query_string: If available, then search string inserted by the user
+:return: Rendered folium map object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.view.View.refreshMap">
+<span class="sig-name descname"><span class="pre">refreshMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.view.View.refreshMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggers update of folium map and loads the new map. Loaded map is stored into a map.html object that can be
+loaded into the Iframe object by the Dash App.
+:param query_string: If available, then search query string inserted by the user.
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="view.view.View.styleFuntion">
+<span class="sig-name descname"><span class="pre">styleFuntion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iso_ids_with_article_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#view.view.View.styleFuntion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Styling for choropleth map when not-hovering.
+Returns different styling for countries where there is news data available and where there is not
+:param iso_ids_with_article_data: List of ISO codes for which there is article data for the respective filters
+:param feature: GEOJson feature
+:return: folium style dict</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+    <div class="footer" role="contentinfo">
+        <div class="container">
+            &#169; Copyright 2021, Benedikt Ströbl, Victor Möslein, Reed Garvin, Anna Deniz.
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.
+        </div>
+    </div>  
+
+</body>
+</html>

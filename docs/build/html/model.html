@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Model &mdash; Mondo News 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Controller" href="controller.html" />
+    <link rel="prev" title="The View" href="view.html" /> 
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a class="site-nav-toggle hidden-lg-up"><i class="icon-menu"></i></a>
+            <a class="site-title" href="index.html">
+                Mondo News
+            </a>
+        </div>
+    </header>
+
+
+<div class="breadcrumbs-outer hidden-xs-down">
+    <div class="container">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="breadcrumbs">
+    
+      <li><a href="index.html">Docs</a></li>
+        
+      <li>The Model</li>
+    
+    
+      <li class="breadcrumbs-aside">
+        
+            
+            <a href="_sources/model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+</div>
+    </div>
+</div>
+    <div class="main-outer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3 site-nav">
+                    
+<div role="search">
+    <form class="search" action="search.html" method="get">
+        <div class="icon-input">
+            <input type="text" name="q" placeholder="Search" />
+            <span class="icon-search"></span>
+        </div>
+        <input type="submit" value="Go" class="d-hidden" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+                    <div class="site-nav-tree">
+                        
+                            
+                            
+                                <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="view.html">The View</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">The Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dash_app.html">The Dash App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">The Utils Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sql_connector.html">PostgreSQL Connector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scraper_scheduler.html">Scheduler/Scraper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup Module</a></li>
+</ul>
+
+                            
+                        
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9">
+                    <div class="document">
+                        
+                            
+  <section id="module-model.model">
+<span id="the-model"></span><h1>The Model<a class="headerlink" href="#module-model.model" title="Permalink to this headline">¶</a></h1>
+<p>The model is where all data operations take place. The news article data is retrieved from the NewsAPI,
+transformed into a pandas dataframe, translated into English and stored to the SQL database.
+Additionally, the keyword search and the filtering based on news categories is implemented here.</p>
+<blockquote>
+<div><p>utils
+sql_connector
+scraper_scheduler
+setup</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="model.model.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><a class="headerlink" href="#model.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Model consists of pure application logic, which interacts with the database.
+It includes all the information to represent data to the end user and directly manages the data,
+logic and rules of the application.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.getArticlesByCategories">
+<span class="sig-name descname"><span class="pre">getArticlesByCategories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.getArticlesByCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters full article data by selected categories from the buttons in the UI. When the user clicks on one or
+multiple categories on Mondo News, this function filters the article data based on these selected categories and
+returns a dataframe containing all article data of the corresponding categories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filter_categories</strong> – List of categories selected</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered pandas dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.getArticlesByKeywordSearch">
+<span class="sig-name descname"><span class="pre">getArticlesByKeywordSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_filtered_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.getArticlesByKeywordSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the keyword search on the headlines in the data frame passed in category_filtered_df.
+The user can input any search string on Mondo News as well as select one or more categories in which to search
+for articles. This function returns the dataframe that contains only articles of the desired category where
+the query appears in the headline.
+This function is robust to upper- or lowercase strings, as all queries as well as headlines are converted to
+lowercase before the search is performed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query_string</strong> – The search string entered by the user on Mondo News.</p></li>
+<li><p><strong>category_filtered_df</strong> – The dataframe containing all article data of the selected categories.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dataframe containing the articles where the query_string appears in the headline and the article is</p>
+</dd>
+</dl>
+<p>of the selected category</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.getFullArticleData">
+<span class="sig-name descname"><span class="pre">getFullArticleData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.getFullArticleData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns latest full article data as pandas dataframe.
+:return: Latest article data as pandas dataframe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.getSupportedCategories">
+<span class="sig-name descname"><span class="pre">getSupportedCategories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.getSupportedCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of categories supported in the application
+:return: List of supported categories</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.getThreeLetterIsoCodes">
+<span class="sig-name descname"><span class="pre">getThreeLetterIsoCodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.getThreeLetterIsoCodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Available three letter Iso country codes for the countries for which there is News data available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List with three letter Iso codes of the countries which have news data available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.getTwoLetterIsoCodes">
+<span class="sig-name descname"><span class="pre">getTwoLetterIsoCodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.getTwoLetterIsoCodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the two letter country codes of all countries supported by Mondo News as a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of two letter country codes of countries supported by Mondo News.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.refreshDataFromSQL">
+<span class="sig-name descname"><span class="pre">refreshDataFromSQL</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.refreshDataFromSQL" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function saves the latest full article data as pandas dataframe from the SQL database in the df_article
+class variable.
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.scrape_newsAPI">
+<span class="sig-name descname"><span class="pre">scrape_newsAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.scrape_newsAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions scrapes data from the NewsAPI and stores it into the top_headlines dictionary.
+The function uses a for-loop to go through the list of all countries and then retrieves the data for the
+category passed on as parameter of the function based on the language of the country that the news
+is retrieved for.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>category</strong> – The category of which to scrape the news.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with raw API response from NewsAPI for all countries and the category specified</p>
+</dd>
+</dl>
+<p>in the parameter</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.storeArticleData">
+<span class="sig-name descname"><span class="pre">storeArticleData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_article_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.storeArticleData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function overwrites the df_article class variable with the transformed data frame given as parameter.
+The function then also pushes the transformed article data given as parameter to the SQL database where it
+is being stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>transformed_article_data</strong> – Pandas data frame with transformed article data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.transform_article_data">
+<span class="sig-name descname"><span class="pre">transform_article_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_api_response_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.transform_article_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function transforms the response dictionary from scrape_newsAPI() into a pandas dataframe
+by mapping the relevant data to predefined columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_api_response_dict</strong> – The dictionary containing the raw NewsAPI response object for a category</p></li>
+<li><p><strong>category</strong> – The news category for which the raw_api_response_dict contains news data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Transformed article data pandas dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.translateArticleDataDeepL">
+<span class="sig-name descname"><span class="pre">translateArticleDataDeepL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">news_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.translateArticleDataDeepL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets scraped and transformed dataframe with information on all news articles and translates relevant information
+using the Deepl translator API. The API recognizes the original language and translates to British English.
+It translates only the title as only the title is used on Mondo News and returns a pandas dataframe which
+contains the translated headlines for every article instead of the original one. All other columns of the
+dataframe except the headline remain unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>news_df</strong> – Data frame containing data on all news articles.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Article data pandas dataframe with headline (title column) translated into English.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.model.Model.translateArticleDataDeepTanslator">
+<span class="sig-name descname"><span class="pre">translateArticleDataDeepTanslator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">news_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.model.Model.translateArticleDataDeepTanslator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets scraped and transformed dataframe with information on all news articles and translates relevant information
+using the free deep-translator API. The API recognizes the original language and translates to British English.
+It translates only the title as only the title is used on Mondo News and returns a pandas dataframe which
+contains the translated headlines for every article instead of the original one. All other columns of the
+:param news_df: Data frame containing data on all news articles.
+:return: Article data pandas dataframe with headline (title column) translated into English.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+    <div class="footer" role="contentinfo">
+        <div class="container">
+            &#169; Copyright 2021, Benedikt Ströbl, Victor Möslein, Reed Garvin, Anna Deniz.
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.
+        </div>
+    </div>  
+
+</body>
+</html>

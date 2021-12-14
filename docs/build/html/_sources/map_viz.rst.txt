@@ -1,0 +1,5 @@
+map_viz documentation
+=================
+
+.. automodule:: view.map_viz
+   :members:

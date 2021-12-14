@@ -4,8 +4,7 @@ This is called by a scheduler application on our Heroku webserver.
 """
 from controller.controller import controllerObject
 
-print("Daily data Update started...")
-controllerObject.updateArticleData()
-print("Daily data update finished successfully!")
-
-
+if __name__ == "__main__":
+    print("Daily data Update started...")
+    controllerObject.updateArticleData()
+    print("Daily data update finished successfully!")

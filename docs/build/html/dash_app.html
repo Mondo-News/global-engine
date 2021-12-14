@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Dash App &mdash; Mondo News 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Utils Module" href="utils.html" />
+    <link rel="prev" title="The Controller" href="controller.html" /> 
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a class="site-nav-toggle hidden-lg-up"><i class="icon-menu"></i></a>
+            <a class="site-title" href="index.html">
+                Mondo News
+            </a>
+        </div>
+    </header>
+
+
+<div class="breadcrumbs-outer hidden-xs-down">
+    <div class="container">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="breadcrumbs">
+    
+      <li><a href="index.html">Docs</a></li>
+        
+      <li>The Dash App</li>
+    
+    
+      <li class="breadcrumbs-aside">
+        
+            
+            <a href="_sources/dash_app.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+</div>
+    </div>
+</div>
+    <div class="main-outer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3 site-nav">
+                    
+<div role="search">
+    <form class="search" action="search.html" method="get">
+        <div class="icon-input">
+            <input type="text" name="q" placeholder="Search" />
+            <span class="icon-search"></span>
+        </div>
+        <input type="submit" value="Go" class="d-hidden" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+                    <div class="site-nav-tree">
+                        
+                            
+                            
+                                <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="view.html">The View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">The Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">The Controller</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Dash App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">The Utils Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sql_connector.html">PostgreSQL Connector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scraper_scheduler.html">Scheduler/Scraper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup Module</a></li>
+</ul>
+
+                            
+                        
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9">
+                    <div class="document">
+                        
+                            
+  <section id="module-dash_app">
+<span id="the-dash-app"></span><h1>The Dash App<a class="headerlink" href="#module-dash_app" title="Permalink to this headline">¶</a></h1>
+<p>This module contains the dash application and is the main entry point to execute the project.
+It defines the layout and styling of our web application and also contains the callback functions that provide the
+interactivity depending on the user inputs.</p>
+<p>Additional CSS files, fonts and other resources are automatically loaded from the “assets” directory in the project folder.</p>
+<blockquote>
+<div><p>utils
+sql_connector
+scraper_scheduler
+setup</p>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py" id="dash_app.change_button_style">
+<span class="sig-prename descclassname"><span class="pre">dash_app.</span></span><span class="sig-name descname"><span class="pre">change_button_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clicks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dash_app.change_button_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Listens to button clicks and returns styling objects based on whether buttons was already active or not.
+:param n_clicks: Number of time button has been clicked since page was loaded.
+:return: Style object based on button active/passive</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dash_app.serve_layout">
+<span class="sig-prename descclassname"><span class="pre">dash_app.</span></span><span class="sig-name descname"><span class="pre">serve_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dash_app.serve_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains the layout of the Dash Web Applications. Also triggers initial update of the html map file when page is
+loaded.
+:return: Dash app layout object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dash_app.update_map">
+<span class="sig-prename descclassname"><span class="pre">dash_app.</span></span><span class="sig-name descname"><span class="pre">update_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">general_n_clicks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">technology_n_clicks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">health_n_clicks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">science_n_clicks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">business_n_clicks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sports_n_clicks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dash_app.update_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Listens to all buttons and the search input field whether they are clicked/text is entered and triggers the update
+process of the map depending on the input.
+:param general_n_clicks: Number of clicks of the “general” buttons
+:param technology_n_clicks: Number of clicks of the “technology” buttons
+:param health_n_clicks: Number of clicks of the “health” buttons
+:param science_n_clicks: Number of clicks of the “science” buttons
+:param business_n_clicks: Number of clicks of the “business” buttons
+:param sports_n_clicks: Number of clicks of the “sports” buttons
+:param query_string: Text entered in the search field
+:return: Either dash.no_update OR the srcDoc with the newly rendered .html folium map used in the Iframe component.</p>
+</dd></dl>
+
+</section>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+    <div class="footer" role="contentinfo">
+        <div class="container">
+            &#169; Copyright 2021, Benedikt Ströbl, Victor Möslein, Reed Garvin, Anna Deniz.
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.
+        </div>
+    </div>  
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Controller &mdash; Mondo News 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Dash App" href="dash_app.html" />
+    <link rel="prev" title="The Model" href="model.html" /> 
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a class="site-nav-toggle hidden-lg-up"><i class="icon-menu"></i></a>
+            <a class="site-title" href="index.html">
+                Mondo News
+            </a>
+        </div>
+    </header>
+
+
+<div class="breadcrumbs-outer hidden-xs-down">
+    <div class="container">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="breadcrumbs">
+    
+      <li><a href="index.html">Docs</a></li>
+        
+      <li>The Controller</li>
+    
+    
+      <li class="breadcrumbs-aside">
+        
+            
+            <a href="_sources/controller.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+</div>
+    </div>
+</div>
+    <div class="main-outer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3 site-nav">
+                    
+<div role="search">
+    <form class="search" action="search.html" method="get">
+        <div class="icon-input">
+            <input type="text" name="q" placeholder="Search" />
+            <span class="icon-search"></span>
+        </div>
+        <input type="submit" value="Go" class="d-hidden" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+                    <div class="site-nav-tree">
+                        
+                            
+                            
+                                <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="view.html">The View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">The Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dash_app.html">The Dash App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">The Utils Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sql_connector.html">PostgreSQL Connector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scraper_scheduler.html">Scheduler/Scraper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup Module</a></li>
+</ul>
+
+                            
+                        
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9">
+                    <div class="document">
+                        
+                            
+  <section id="module-controller.controller">
+<span id="the-controller"></span><h1>The Controller<a class="headerlink" href="#module-controller.controller" title="Permalink to this headline">¶</a></h1>
+<p>The controller module is the layer between all view and model modules and build the layer between the two.
+In the module we call methods from both model and view and transmit data between them.</p>
+<blockquote>
+<div><p>utils
+sql_connector
+scraper_scheduler
+setup</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="controller.controller.Controller">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">controller.controller.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><a class="headerlink" href="#controller.controller.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Controller class forms the layer between View and Model to guarantee interchangeability and a common
+interface between the two. It also helps in collaborative development, since frontend and backend can be implemented
+autonomously.
+The Controller provides methods that View and Model can use to communicate with each other and get e.g. Data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.deselectCategory">
+<span class="sig-name descname"><span class="pre">deselectCategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.deselectCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove category from the list of currently selected categories
+:param category: Category to de-select
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.getArticlesByCategories">
+<span class="sig-name descname"><span class="pre">getArticlesByCategories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.getArticlesByCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger method in model to return filtered dataframe containing only articles in the categories passed to the method.
+Additionally this methods filters for the top-5 articles per category and country.
+:param categories: Categories to filter for.
+:return: Dataframe with top-5 articles per country and category for the categories passed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.getArticlesByKeywordSearch">
+<span class="sig-name descname"><span class="pre">getArticlesByKeywordSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.getArticlesByKeywordSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as getArticlesByCategories, but additionally trigger method in model to filter for query searched for by the user.
+:param categories: Categories to filter for.
+:param query_string: Query inserted by the user.
+:return: Dataframe with top-5 articles per country and category for the categories passed and the query searched for.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.getAvailableIsoCodes">
+<span class="sig-name descname"><span class="pre">getAvailableIsoCodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.getAvailableIsoCodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requests Iso codes from model for which there is news data available and returns them in the desired format that
+is defined by the input parameter iso_type
+:type iso_type: ISO type of return object: Either two or three
+:return: List of Iso codes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.getFullArticleData">
+<span class="sig-name descname"><span class="pre">getFullArticleData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.getFullArticleData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger method in model to return current full dataframe from the SQL db
+:return: Dataframe with latest data in the remote PostgreSQL database</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.getSelectedCategories">
+<span class="sig-name descname"><span class="pre">getSelectedCategories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.getSelectedCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of currently selected categories
+:return: List of selected categories (Strings)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.refreshDataFromSQL">
+<span class="sig-name descname"><span class="pre">refreshDataFromSQL</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.refreshDataFromSQL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggers data from the SQL connector module to request data in remote PostgreSQL database
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.selectCategory">
+<span class="sig-name descname"><span class="pre">selectCategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.selectCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new category to the list of currently selected categories
+:param category: Category to select
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="controller.controller.Controller.updateArticleData">
+<span class="sig-name descname"><span class="pre">updateArticleData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.controller.Controller.updateArticleData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates all data pipelines by consecutively triggering methods for scraping NewsAPI, transforming API response
+into dataframe, calling deepL API for translating article titles, and writing the resulting new dataframe into the
+PostgreSQL database remotely.
+:return: None</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+    <div class="footer" role="contentinfo">
+        <div class="container">
+            &#169; Copyright 2021, Benedikt Ströbl, Victor Möslein, Reed Garvin, Anna Deniz.
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.
+        </div>
+    </div>  
+
+</body>
+</html>

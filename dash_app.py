@@ -8,7 +8,7 @@ Additional CSS files, fonts and other resources are automatically loaded from th
 import dash
 from utils import utils
 from controller.controller import controllerObject
-from view.map_viz import viewObject
+from view.view import viewObject
 from dash import html, dcc
 from dash.dependencies import Input, Output
 

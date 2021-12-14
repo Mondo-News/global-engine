@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PostgreSQL Connector &mdash; Mondo News 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.min.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Scheduler/Scraper" href="scraper_scheduler.html" />
+    <link rel="prev" title="The Utils Module" href="utils.html" /> 
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a class="site-nav-toggle hidden-lg-up"><i class="icon-menu"></i></a>
+            <a class="site-title" href="index.html">
+                Mondo News
+            </a>
+        </div>
+    </header>
+
+
+<div class="breadcrumbs-outer hidden-xs-down">
+    <div class="container">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="breadcrumbs">
+    
+      <li><a href="index.html">Docs</a></li>
+        
+      <li>PostgreSQL Connector</li>
+    
+    
+      <li class="breadcrumbs-aside">
+        
+            
+            <a href="_sources/sql_connector.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+</div>
+    </div>
+</div>
+    <div class="main-outer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3 site-nav">
+                    
+<div role="search">
+    <form class="search" action="search.html" method="get">
+        <div class="icon-input">
+            <input type="text" name="q" placeholder="Search" />
+            <span class="icon-search"></span>
+        </div>
+        <input type="submit" value="Go" class="d-hidden" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+                    <div class="site-nav-tree">
+                        
+                            
+                            
+                                <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="view.html">The View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">The Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">The Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dash_app.html">The Dash App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">The Utils Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PostgreSQL Connector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scraper_scheduler.html">Scheduler/Scraper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup Module</a></li>
+</ul>
+
+                            
+                        
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9">
+                    <div class="document">
+                        
+                            
+  <section id="module-utils.SQL_connector">
+<span id="postgresql-connector"></span><h1>PostgreSQL Connector<a class="headerlink" href="#module-utils.SQL_connector" title="Permalink to this headline">¶</a></h1>
+<p>This module builds the connection to the PostgreSQL database hosted remotely by Heroku.
+It provides methods to write and read data to and from the database respectively.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.SQL_connector.readDataFromSQL">
+<span class="sig-prename descclassname"><span class="pre">utils.SQL_connector.</span></span><span class="sig-name descname"><span class="pre">readDataFromSQL</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.SQL_connector.readDataFromSQL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from database and store it into a Pandas data frame.
+:return: Pandas data frame with data currently stored in SQL database.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.SQL_connector.writeDataToSQL">
+<span class="sig-prename descclassname"><span class="pre">utils.SQL_connector.</span></span><span class="sig-name descname"><span class="pre">writeDataToSQL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pd_dataframe</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.SQL_connector.writeDataToSQL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write data from data frame to the remote SQL database.
+:param pd_dataframe: Pandas data frame with new data to write to SQL database.
+:return: None</p>
+</dd></dl>
+
+</section>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+    <div class="footer" role="contentinfo">
+        <div class="container">
+            &#169; Copyright 2021, Benedikt Ströbl, Victor Möslein, Reed Garvin, Anna Deniz.
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.
+        </div>
+    </div>  
+
+</body>
+</html>

@@ -4,17 +4,17 @@ when called.
 """
 from setuptools import setup
 
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
+if __name__ == "__main__":
+    with open('requirements.txt') as f:
+        required = f.read().splitlines()
 
-setup(
-    name='Mondo News',
-    version='1.0.0',
-    packages=[''],
-    url='https://github.com/Mondo-News/global-engine',
-    license='',
-    author='Victor Möslein & Benedikt Ströbl',
-    author_email='stroebl.benedikt@gmail.com',
-    description='Your visual global news platform',
-    install_requires=required
-)
+    setup(
+        name='Mondo News',
+        version='0.1',
+        url='https://github.com/Mondo-News/global-engine',
+        license='',
+        author='Victor Möslein & Benedikt Ströbl',
+        author_email='stroebl.benedikt@gmail.com',
+        description='Your visual global news platform',
+        install_requires=required
+    )
