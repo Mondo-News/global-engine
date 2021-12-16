@@ -2,8 +2,6 @@
     :width: 400
     :align: center
 
-.. class:: center
-
 Mondo News - Your visual global news platform
 ===================================================
 

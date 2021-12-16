@@ -1,5 +1,5 @@
 """
-This module provides utility functions and variables that are used throughout the project,
+This module provides utility functions and variables that are used throughout the project.
 It provides relative paths and functions to convert country ISO codes.
 """
 import pycountry

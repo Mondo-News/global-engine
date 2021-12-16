@@ -1,5 +1,5 @@
 """
-The controller module is the layer between all view and model modules and build the layer between the two.
+The controller module is the layer between all view and model modules and builds the layer between the two.
 In the module we call methods from both model and view and transmit data between them.
 """
 from model.model import modelObject

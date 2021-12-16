@@ -1,6 +1,6 @@
 """
 The view module contains all methods needed to create and update the folium map object used in the web application.
-It requests data from the mode ONLY through the controller.
+It requests data from the model ONLY through the controller.
 """
 import json
 import urllib
