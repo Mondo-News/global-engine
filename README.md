@@ -12,7 +12,7 @@ See <a href="https://mondo-news.readthedocs.io/en/latest/">**documentation!**</a
 
 Our product is a website with an **interactive globe** that allows the user to zoom in on trending news from specific countries. 
 We focus on countries that are in the G20 and parse news articles in **nine different languages and translate them to English**.
-Per country and category, five news articles will be shown, including a thumbnail picture, the headline, and a link to the article page.
+Per country and category, five news articles are shown, including a thumbnail picture, the headline, and a link to the article page.
 The articles are automatically categorized into the following categories:
 
 | Symbol    | Category | 
@@ -24,9 +24,9 @@ The articles are automatically categorized into the following categories:
 | <img src="https://github.com/Mondo-News/global-engine/blob/main/data/pictures/business.png?raw=true" width="30px"> | `Business` |
 | <img src="https://github.com/Mondo-News/global-engine/blob/main/data/pictures/sports.png?raw=true" width="30px"> | `Sports` |
 
-By default, the articles shown will be the most **popular articles in that country from the last 24 hours**.
-A filter on the world map level will allow to change the categories to be displayed.
-In addition, a search bar on the world map level will allow the user to search for specific keywords from within the headlines.
+By default, the articles shown are the most **popular articles in that country from the last 24 hours**.
+A filter on the world map level allows to change the categories to be displayed.
+In addition, a search bar on the world map level allows the user to search for specific keywords from within the headlines.
 
   
 ## API Reference
