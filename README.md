@@ -28,6 +28,19 @@ By default, the articles shown are the most **popular articles in that country f
 A filter on the world map level allows to change the categories to be displayed.
 In addition, a search bar on the world map level allows the user to search for specific keywords from within the headlines.
 
+## Try it yourself!
+In order to install and run Mondo News on your own maschine, just download the repo and follow the instructions:
+1. Download the repo as .zip
+2. Navigate inside the global-engine directory and open a terminal/command prompt
+3. Install all dependencies from the requirements.txt file with:
+    `$ pip install -r requirements.txt`
+
+4. Run `dash_app.py`
+5. Open the localhost URL printed out in the console after a little while
+
+**Note:** Alternatively, we recommend to **take a look at our live demo** <a href="https://mondo-news.herokuapp.com/">**here!**</a>
+
+
   
 ## API Reference
 
