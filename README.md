@@ -31,7 +31,7 @@ In addition, a search bar on the world map level allows the user to search for s
 ## Try it yourself!
 In order to install and run Mondo News on your own maschine, just download the repo and follow the instructions:
 1. Download the repo as .zip
-2. Navigate inside the global-engine directory and open a terminal/command prompt
+2. Navigate inside the global-engine-main directory and open a terminal/command prompt
 3. Install all dependencies from the requirements.txt file with:
     `$ pip install -r requirements.txt`
 
