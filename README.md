@@ -56,7 +56,7 @@ The data for Mondo News is mainly acquired and transformed by utilizing the foll
   
 ## Authors
 
-- [@GamesluxX](https://www.github.com/@GamesluxX)
+- [@benediktstroebl](https://www.github.com/@benediktstroebl)
 - [@sailandcode](https://www.github.com/sailandcode)
 - [@skier921](https://www.github.com/skier921)
 - [@annaccd](https://www.github.com/@annaccd)
