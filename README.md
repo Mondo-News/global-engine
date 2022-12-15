@@ -4,8 +4,6 @@
     
 Our product delivers an interactive world map where users can **visualize the top headlines per country**, within fourteen countries from the Group of Twenty (G20) intergovernmental forum. The target user is someone interested in knowing what is going on from **multicultural worldview**, with it being specially useful for scholars in the fields of public policy and international affairs.
 
-Take a look at Mondo News <a href="https://mondo-news.herokuapp.com/">**here!**</a>
-
 See <a href="https://mondo-news.readthedocs.io/en/latest/">**documentation!**</a>
 
 ## Features
