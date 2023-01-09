@@ -37,8 +37,6 @@ In order to install and run Mondo News on your own maschine, just download the r
 5. Open the localhost URL printed out in the console after a little while
  with: `python dash_app.y` (Windows) OR `python3 dash_app.py` (MacOS)
  
-**Note:** Alternatively, we recommend to **take a look at our live demo** <a href="https://mondo-news.herokuapp.com/">**here!**</a>
-
 
   
 ## API Reference
